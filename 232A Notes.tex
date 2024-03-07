@@ -1,0 +1,3023 @@
+
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{epsfig}
+\usepackage{dynkin-diagrams}
+
+\pagestyle{fancy}{
+	\fancyhead[L]{Winter 2023}
+	\fancyhead[C]{232A}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+\newcommand{\pmat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\fin}{``\in"}
+\newcommand{\mk}[1]{\mathfrak{#1}}
+\newcommand{\g}{\mk{g}}
+\newcommand{\h}{\mk{h}}
+\newcommand{\tphi}{\tilde{\phi}}
+\DeclareMathOperator{\Perm}{Perm}
+\DeclareMathOperator{\pdim}{pdim}
+\DeclareMathOperator{\gldim}{gldim}
+\DeclareMathOperator{\lgldim}{lgldim}
+\DeclareMathOperator{\rgldim}{rgldim}
+\DeclareMathOperator{\idim}{idim}
+\DeclareMathOperator{\SU}{SU}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\ad}{ad}
+\newcommand{\Rmod}{R-\text{mod}}
+\newcommand{\RMod}{R-\text{Mod}}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\barf}{\bar{f}}
+\newcommand{\dd}[2]{\frac{d#1}{d#2}}
+\renewcommand{\P}{\mathbb{P}}
+\renewcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Rank}{Rank}
+
+\newcommand{\exactlon}[5]{
+		\begin{tikzcd}
+			0\ar[r]&#1\ar[r,"#2"]& #3 \ar[r,"#4"]& #5 \ar[r]&0
+		\end{tikzcd}
+}
+
+\title{231A - Lie Theory}
+\author{John White}
+\date{Winter 2024}
+
+
+\begin{document}
+
+
+\section*{Lecture 1 - 1/9/24}
+
+Books: Bisi will be using ``Lie Algebras, Lie Groups, and Representations" by Hall, 2nd edition
+
+Also ``Lectures on Lie groups" by Adams
+
+``Representations of compact Lie groups" by Br\"ocker
+
+``Introduction to Lie algebras and representation theory"
+
+``Lie Algebras and Lie Groups" by Bourbaki 
+
+``Lectures on Lie Groups and Lie algebras," Carter, Segal, et al.
+
+\subsection*{\underline{Matrix Groups}}
+
+Roughly speaking, a Lie group is a smooth manifold together with a smooth group structure. 
+
+\[
+\mu:G\times G \to G\text{ multiplication }
+\]
+\[
+i:G\to G \text{ inverse } 
+\]
+
+These are smooth maps. 
+
+\exm
+\,
+
+\begin{itemize}
+
+\item $\R$ with addition
+
+\item $S^1$ under multiplication.
+
+\item If $G_1, G_2$ are Lie Groups, so is their product. 
+
+\item Any torus is a Lie group. It will turn out that these are the only compact connected Abelian Lie groups.
+
+\item $\GL(n,\R)$ is an open submanifold of $M_n(\R) = \R^{n^2}$
+
+\item $G = \R \times \R \times S^1$ with the group structure 
+\[
+(x_1, y_1, u_1) \cdot (x_2, y_2, u_2) = (x_1 + x_2, y_1 + y_2, e^{ix_1y_2}u_1u_2)
+\]
+We will see later that $G$ has no faithful matrix representation, and so is not isomorphic to a matrix group. 
+
+\end{itemize}
+
+\defn
+
+A \underline{matrix group} is a closed subgroup of $\GL(n,\C)$
+
+E.g $\GL(n,\Q)$ is not closed in $\GL(n,\C)$ and so is not a matrix group (although it is a group of matrices). 
+
+\defn
+
+Recall that if $A \in M_n(\C)$, then the \underline{adjoint} of $A$, $A^*$, is the conjugate transpose of $A$, $\bar{A^T}$. 
+
+We say that $A \in M_n(\C)$ is \underline{unitary} if $A^*A = I$
+
+This is equivalent to saying that $A$ preserves the standard inner product $\langle x, y \rangle = \sum_ix_i\cdot \bar{y_i}$ on $\C^n$, i.e. $\langle x, y \rangle = \langle A x, Ay \rangle$. As an exercise, show that $|\det(A)| = 1$
+
+We say that $A \in M_n(\R)$ is \underline{orthogonal} if $A^TA = I$. This is equivalent to saying that $A$ preserves the standard inner product on $\R^n$. Again, $|\det(A)| = 1$, and we obtain $O_n(\R)$, $\SO_n(\R)$
+
+
+There are a plethora of examples:
+
+\exm
+\,
+
+\begin{itemize}
+
+\item General and special linear groups $\GL_n, \SL_n$
+
+\item Unitary and Orthogonal groups $U_n(\C), \SU_n(\C)$
+
+\item $O_n(\R), \SO_n(\R)$
+
+\item $O_n(\C), \SO_n(\C)$, which are \underline{NOT} the same as the unitary groups, e.g. they preserve different bilinear forms, i.e. the extension of the standard product on $\R^n$ is \underline{NOT} an inner product on $\C^n$
+
+
+\end{itemize}
+
+\underline{Remark}
+
+More generally $U(p, q)$ preserves the standard Hermitian form on $\C^n$ of signature $(p, q)$, where $p + q = n$
+
+\subsection*{\underline{Symplectic Groups}}
+
+These are slightly confusing because there are three sets of them, $Sp_{n}(\R), Sp_{n}(\C), Sp_{n}$ and their definition involves skew symmetric rather than symmetric forms. 
+
+Suppose $\F$ is $\C$ or $\R$. Consider the following Skew-symmetric form on $\F^{2n}$ given by 
+\[
+\omega(x, y) = \sum_{j=1}^n (x_jy_{n+j} - x_{n+j}y_j)
+\]
+
+Here is another way of writing this: if $\Omega$ is the block matrix $\pmat{0}{I}{-I}{0}$, then 
+\[
+\omega(x, y) = ( x, \Omega y )
+\]
+where $(x, y) = \sum_j x_jy_j$ is the standard inner product if $\F = \R$, and just a bilinear form if $\F = \C$.
+
+\defn
+
+The \underline{symplectic group over $\F$, $S_{p_n}(\F)$}, is defined by
+\[
+Sp_{n}(\F) = \{A \in M_{2n}(\F) \mid \omega(Ax, Ay) = \omega(x, y)\} \underbrace{=}_{\text{exercise}} \{A \in M_{2n}(\F) \mid -\Omega A^t \Omega = A^{-1}\}
+\]
+
+The \underline{compact symplectic group $Sp_n$} is defined by 
+\[
+Sp_n \eqdef Sp_n(\C) \cap U_{2n}
+\]
+
+The \underline{Heisenburg group} is the set of all matrices $A$ of the form 
+\[
+\begin{pmatrix}
+1 & * & * \\
+0 & 1 & * \\
+0 & 0 & 1 \\
+\end{pmatrix}
+\]
+
+\section*{Lecture 2 - 1/16/24}
+
+\subsection*{\underline{Compactness and connectedness}}
+
+\defn
+
+A matrix group $G \subseteq \GL(n,\C)$ is \underline{compact} if it is compact as a subset of $M_n(\C) \cong \C^{n^2} \cong \R^{(2n)^2}$
+
+If $G \subseteq M_n(\C)$, this is compact if and only if $G$ is closed and bounded. 
+
+\exm
+\,
+$O(n), \SO(n), U(n), \SU(n)$ are compact. The boundedness condition comes from the fact that the columns of any element of any of these things are unit vectors. 
+
+On the other hand, $\SL_n(\R) (n\geq2)$ is not compact, because it is unbounded, e.g. take $n = 2$ and consider the matrix 
+\[
+\pmat{\lambda}{0}{0}{\frac{1}{\lambda}}
+\]
+
+\defn
+
+A matrix group $G$ is \underline{path-connected} if for any two $A, B \in G$, there is a continuous $\gamma:[0,1]\to G$ such that $\gamma(0) = A$ and $\gamma(1) = B$ (continuous with respect to its topology as a subspace of $\GL(n,\C)$)
+
+\underline{Remark:} We will see later that connectedness and path-connectedness for a matrix Lie group are equivalent. Henceforth we will assume this and drop the adjective ``path."
+
+\exm
+\,
+
+If $G$ is a matrix group, then the connected component containing the identity, called $G_0$, is a normal subgroup of $G$. 
+
+(Later, after we've learned about the exponential map we'll see that $G_0$ is closed in $G$ and is itself a matrix group).
+
+To see this, write down some obvious paths, e.g. and suppose that $A \in G_0$, $\Gamma:[0,1]\to G$ is a path with $\Gamma(0) = I$ and $\Gamma(1) = A$. 
+
+Then $\Gamma^{-1}[0,1]\to G$, given by composing $\Gamma$ with the inverse map, $t \mapsto \Gamma(t)^{-1}$ is a continuous path in $G$ connecting $I$ to $A^{-1}$, and so $A$ and $A^{-1}$ are in the same connected component. We can do the same thing with products and conjugates. 
+
+\exm
+\,
+The group $\GL(n,\C)$ is connected for all $n \geq 1$. It is clear for $n = 1$. Assume $n \geq 2$. 
+
+Suppose that $A, B \in \GL(n,\C)$ and observe that there are only finitely many solutions of the equation $\det(\lambda A + (1-\lambda)B) = 0$
+
+This is a polynomial in $\lambda$ which is not identically zero. 
+
+Let $\gamma:[0,1]\to \C$ with $\gamma(0) = 0$ and $\gamma(1) = 1$ be a continuous path in $\C$ which avoids the set of solutions of the above equation.
+
+Then if we define $\Gamma(t) = \gamma(t)A + (1 - \gamma(t))B$, $0 \leq t \leq 1$, this is a path in $\GL(n,\C)$ that connects $B$ and $A$.
+
+\exm
+\,
+
+The groups $\SL_n(\C)$, $U(n)$, and $\SU(n)$, these are all connected for $n \geq 1$, and the group $\GL(n,\R)$ is not connected but has two components. 
+
+\subsection*{\underline{The Geometry of $\SU(2,\C)$}}
+
+Elements of $\SU(2,\C)$ may be written in the form
+\[
+\pmat{a}{b}{-\bar{b}}{\bar{a}}
+\]
+with $|a|^2 + |b|^2 = 1$. Now recall that quaternions $q = t + xi + yj + zk$, with $t, x, y,z\in\R$ may also be identified with 2x2 matrices of the above shape by 
+\[
+i = \pmat{i}{0}{0}{-i},\,j=\pmat{0}{1}{-1}{0},\, k = \pmat{0}{i}{i}{0}
+\]
+
+Hence $\SU(2,\C)$ is the same as the group of unit quaternions. Topologically, this is just a 3-sphere, and so is simply connected, so every loop in $\SU(2,\C)$ may be continuously shrunk to a point. 
+
+\underline{Remark:}
+
+We will see later that if $G$ is a simply connected Lie group, then there is a natural bijection between representations of $G$ and representations of its Lie algebra. 
+
+\subsection*{\underline{The Matrix Exponential}}
+
+Recall that there is a norm on $M_n(\C)$ which is defined as follows: 
+
+If $X \in M_n(\C)$, then 
+\[
+\norm{X} \eqdef \left(\sum_{i,j}|X_{ij}|^2 \right)^\frac12
+ = (Tr(XX^T))^\frac12
+\]
+
+\underline{Remark:} $\norm{X^n} \leq \norm{X}^n$
+
+\defn
+
+If $X \in M_n(\C)$, then 
+\[
+e^X \eqdef \sum_{m=0}^\oo\frac{X^m}{m!}
+\]
+This converges for all $X$ and is a continuous function of $X$.
+
+\underline{Exercise:} Prove this by using the $M$ test and the above remark. 
+
+\prop
+
+Suppose that $X, Y \in M_n(\C)$. Then 
+\,
+\begin{enumerate}
+
+\item $e^0 = I$ 
+
+\item The matrix $e^X \in \GL(n,\C)$ and $(e^X)^{-1} = e^{-X}$
+
+\item If $\alpha,\beta\in\C$, then $e^{(\alpha + \beta)X} = e^{\alpha X} \cdot e^{\beta X}$
+
+\item If $XY = YX$, then $e^{X + Y} = e^{X}\cdot e^{Y}$. Note that these equalities are NOT true in general!
+
+\item If $C$ is invertible, then $e^{CXC^{-1}} = Ce^XC^{-1}$ 
+
+\item $\norm{e^X} \leq e^{\norm{X}}$
+
+\end{enumerate}
+
+\prop
+
+If $X \in M_n(\C)$, then $e^{tX}$ is a smooth curve in $M_n(\C)$, and $\dd{}{t}e^{tX} = Xe^{tX} = e^{tX}X$ 
+
+\proof
+
+Differentiate the power series for $e^{tX}$. 
+
+\qed
+
+So if we have a first order ODE
+\[
+\dd{V}{t} = XV
+\]
+with $V(0) = V_0$, with $V(t) \in \R^n$ and $X \in M_n(\C)$, then the unique solution is given by $V(t) = e^{tX}v_0$
+
+\underline{Computation}
+
+To compute the matrix exponential, use the fact (Jordan canonical form) that every $X \in M_n(\C)$ may be written $X = D + N$, where $D$ is diagonal and $N$ is nilpotent. Further, $DN = ND$, so we can use property 4 above. 
+
+\subsection*{\underline{The matrix logarithm}}
+
+Recall the situation for the complex logarithm: the power series 
+\[
+\log(z) = \sum_{n=1}^\oo (-1)^{n+1}\frac{(z-1)^n}{n}
+\]
+is defined and is analytic for all $z$ with $|z - 1| < 1$. For all such $z$, we have $e^{\log(z)} = z$. 
+
+If $|w| < \log(2)$, then $|e^w - 1| < 1$, and $\log(e^w) = w$. 
+
+This motivates the following definition. 
+
+\defn
+
+If $A \in M_n(\C)$, then we define 
+\[
+\log(A) = \sum_{m=1}^\oo(-1)^{m+1}\frac{(A-I)^m}{m}
+\]
+whenever the series converges.
+
+$\log(A)$ is defined and continuous on $\{A \in M_n(\C) \mid \norm{A-I}<1\}$ because $\norm{(A-I)^m} \leq \norm{A-I}^m$, plus convergence properties for the series of the complex logarithm.
+
+\begin{enumerate}[label=(\alph*)]
+
+\item On $\{A \in M_n(\C) \mid \norm{A-I}<1\}$, we have $e^{\log(A)} = A$
+
+\item If $\norm{A}<\log(2)$, then $\norm{e^A-I} < 1$ and we have $\log(e^A) = A$
+
+\end{enumerate}
+
+The idea we use to prove this is to prove it for diagonal matrices, and use the fact that diagonalizable matrices are dense, and everything in sight is continuous, as well as the fact that the matrix exponential behaves well with respect to conjugation.
+
+\section*{Lecture 3 - 1/23/24}
+
+Here are some more useful properties of the matrix logarithm. 
+
+\begin{enumerate}
+
+\item There exists a constant $c$ such that on the set $\{ B \in M_n(C) \mid \norm{B} <\frac12\}$ we have
+\[
+\norm{\log(I + B) - B} < c\norm{B}^2
+\]
+
+\item $\log(I + B) = B + O(\norm{B}^2)$
+
+\end{enumerate}
+
+\proof
+
+Observe that 
+\[
+\log(I + B) - B = B^2\sum_{m=2}^\oo(-1)^{m+1}\frac{B^{m+2}}{m}
+\]
+and this implies the result. 
+
+\qed
+
+To motivate the next result, recall that we have 
+\[
+e^x = \lim_{m\to\oo}\left(1 + \frac{x}{n}\right)^m
+\]
+
+We're going to use the following result to classify one-parameter subgroups of $\GL(n,\C)$
+
+\prop
+
+Suppose that $X \in M_n(\C)$ and that $\{C_m\}\in M_n(\C)^\N$ is a sequence of matrices such that $\norm{C_m} \leq \frac{\text{constant}}{m^2}$. Then 
+\[
+\lim_{x\to\oo}(I + \frac{X}{m} + C_m)^m = e^X
+\]
+
+\proof
+
+When $M$ is large, the left-hand side the above lies in the domain of $\log$, and we have 
+\[
+\log(I + \frac{X}{m} + C_m) = \frac{X}{m} + C_m + E_m
+\]
+where $E_m$ is an error term, which satisfies the condition $\norm{E_m}\leq c\norm{\frac{X}{m} + C_m}^2$
+
+Because of the conditions on $C_m$, we know that this is less than or equal to $\frac{\text{constant}}{m^2}$
+
+Then
+\[
+I + \frac{X}{m} + C_m = \exp\left(\frac{X}{m} + C_m + E_m\right)
+\]
+So
+\[
+\left(I + \frac{X}{m} + C_m\right)^m = \exp(X + mC_m + mE_m)
+\]
+
+The result follows because $\norm{C_m}, \norm{E_m} = O(\frac{1}{m^2})$, and the exponential is continuous. 
+
+\qed
+
+Recall that in general $e^{X + Y} \neq e^X\cdot e^Y$ unless $X$ and $Y$ commute. 
+
+\thm[The Lie Product Formula]
+
+Suppose that $X, Y \in M_n(\C)$. Then 
+\[
+e^{X + Y} = \lim_{m\to\oo}\left(e^{\frac{X}{m}}\cdot e^{\frac{Y}{m}}\right)^m
+\]
+
+\proof
+
+We have $e^{\frac{X}{m}}\cdot e^{\frac{Y}{m}} = I + \frac{X}{m} + \frac{Y}{m} + O(\frac{1}{m^2})$. For $m$ large, we may write
+\begin{align*}
+\log(e^{\frac{X}{m}}\cdot e^{\frac{Y}{m}}) &  = \log(I + \frac{X}{m} + \frac{Y}{m} + O(\frac{1}{m^2})) \\
+& = \frac{X}{m} + \frac{Y}{m} + O(\frac{1}{m^2}) \\
+\end{align*}
+
+Therefroe, exponentiating both sides gives
+\[
+e^{\frac{X}{m}}\cdot e^{\frac{Y}{m}} = \exp(\frac{X}{m} + \frac{Y}{m} + O(\frac{1}{m^2}))
+\]
+whence
+\[
+(e^{\frac{X}{m}}\cdot e^{\frac{Y}{m}})^m = \exp(X + Y + O(\frac{1}{m}))
+\]
+
+and this implies the result. 
+
+\thm
+
+If $X \in M_n(\C)$, then $\det(e^X) = e^{\tr(X)}$. 
+
+\proof
+
+Use the same idea as before: prove it for diagonalizable matrices and then use the fact that diagonalizable matrices are dense. 
+
+\defn
+
+A function $A:\R\to\GL(n,\C)$ is called a 
+
+\underline{one-parameter subgroup of $\GL(n,\C)$} if it satisfies the following conditions:
+\begin{enumerate}
+
+\item $A$ is continuous
+
+\item $A(t + s) = A(t)A(s)$ for all $t, s \in \R$
+
+\end{enumerate}
+
+Note the second item implies that $A(0) = I$
+
+\thm
+
+If $A$ is a one-parameter subgroup in $\GL(n,\C)$, then there exists a unique $X\in M_n(\C)$ such that 
+\[
+A(t) = e^{tX}
+\]
+
+\proof
+
+We start by showing uniqueness. If such an $X$ exists, then 
+\[
+X = \dd{}{t}|_{t=0}A(t)
+\]
+
+and so $X$ must be unique. 
+
+Now we show existence. 
+
+\claim
+
+$A$ is smooth
+
+\proof
+
+Let $f(s)$ be a smooth real-valued function supported on a small neighborhood of 0 with $f(s)\geq0$ and $\int_\R f(s)\,ds = 1$(i.e. a "bump function").
+
+Consider: 
+\[
+B(t) \eqdef \int_\R A(t + s)f(s)\,ds
+\]
+By a change of variables, this is equal to 
+\[
+B(t) = \int_\R A(u)f(u-t)\,du
+\]
+We can then differentiate under the integral by $t$, so then $B(t)$ is smooth because $f$ is smooth. 
+
+Appealing to the fact that $A(t + s) = A(t)A(s)$, we obtain 
+\[
+B(t) = A(t)\int_\R A(s)f(s)\,ds
+\]
+The condition on $f$ and the continuity of $A$ imply that the constant matrix $\int_\R A(s)f(s)\,ds$ is closed to $A(0) = I$, and so is invertible. 
+
+Hence we have
+
+\[
+A(t) = B(t)\left(\int_\R A(s)f(s)\,ds\right)^{-1}
+\]
+and so $A$ is smooth as claimed.
+
+Now we define
+\[
+X = \dd{}{t}|_{t=0} A(t)
+\]
+
+\claim
+
+$A(t) = e^{tX}$
+
+\proof
+
+Because $A(t)$ is smooth, for small $t$ we have
+\[
+\norm{A(t) - A(0) - tA'(0)} = \norm{A(t) - (I - tX)} = O(t^2)
+\]
+And so for each fixed $t$ and sufficiently large $m$, we have
+\[
+A(\frac{t}{m}) = I + (\frac{t}{m})X + O(\frac{1}{m^2})
+\]
+Since $A$ is a one-parameter subgroup, we have 
+\begin{align*}
+A(t) & = (A(\frac{t}{m}))^m \\
+	  & = (I + \frac{t}{m}X + O(\frac{1}{m^2}))^m
+\end{align*}
+and the result follows on letting $m$ tend to $\oo$ and applying our earlier proposition.
+
+\qed
+
+\subsection*{\underline{The Lie Algebra of a matrix group}}
+
+Let $G$ be a matrix group. The \underline{Lie Algebra} $\mathfrak{g}$ is the set of all matrices $X$ such that $e^{tX} \in G$ for all $t\in\R$ (i.e. the set of all $X$ such that the one-parameter subgroup corresponding to $X$ lies in $G$).
+
+
+\section*{Lecture 4 - 1/25/24}
+
+Last time we defined the \underline{Lie Algebra} $\mk{g}$ of a matrix group $G \subseteq M_n(\C)$ as all matrices $X \in M_n(\C)$ such that $e^{tX} \in G$ for all real numbers $t$. 
+
+\exm
+
+Let's examine general linear groups. 
+
+Suppose that $X \in M_n(\C)$. Then $\det(e^{tX}) = e^{\tr(X)}$, which is never zero, so $e^{tX}\in\GL(n,\C)$ for all $t$, so the Lie algebra $\mk{g}l_n$ of $\GL(n,\C)$ is just $M_n(\C)$.
+
+Similarly, if $X \in M_n(\C)$, then $e^{tX} \in \GL(n,\R)$ for all $t \in \R$. Also we have
+\[
+X = \dd{}{t}(e^{tX})|_{t=0}
+\]
+is real. So the Lie algebra $\mk{g}l_n(\R)$ of $\GL(n,\R)$ is equal to $M_n(\R)$
+
+\underline{Consequence:}
+
+The above argument shows that if $G \subseteq \GL(n,\R)$, then $\mk{g}\subseteq M_n(\R)$
+
+\subsection*{\underline{Special linear groups}}
+
+If $\tr(X) =0$, then $\det(e^{tX}) = 1$ for all $t \in \R$. 
+
+Conversely, if $\det(e^{tX}) = 1$ for all $t \in \R$, then $e^{t\tr(X)} = 1$ for all $t \in \R$, and so $t \cdot\tr(X) = 2\pi i m, (m\in\Z)$, so we must have $\tr(X) = 0$.
+
+Thus $\mk{s}l_n(\C) = \{X \in M_n(\C) \mid \tr(X) =0\}$
+
+\subsection*{\underline{Unitary groups}}
+
+Recall that $U$ is unitary if and only if $U^* = U^{-1}$. So $e^{tX}$ is unitary if and only if
+\begin{align*}
+(e^{tX})^{*} & = (e^{tX})^{-1} \\
+				  & = e^{-tX} \\
+\end{align*}
+and hence $(e^{tX})^* = e^{tX^*}$, we see that $e^{tX}$ is unitary iff
+\[
+e^{tX^*} = e^{-tX}
+\]
+This holds if $X^* = -X$. Differentiating both sides of the above,  and evaluate at $t = 0$ shows that the above implies $X^* = -X$. 
+
+So we have
+\[
+\mk{s}l_n(\C) = \{X|in M_n(\C) \mid X^* = -X\}
+\]
+we further deduce that $\mk{s}u_n(\C) = \{X\in M_n(\C) \mid X^* = -X, \tr(X) = 0\}$
+
+\subsection*{\underline{Orthogonal groups}}
+
+Recall that $O_n$ has two connected components, and the one containing the identity is $\SO_n$.
+
+Since the exponential of a matrix in the Lie algebra is automatically in the identity component of the group, we see that the Lie Algebra of $O_n$, $\mk{o}_n$, is equal to the Lie algebra of $\SO_n$
+
+Recall that $R \in M_n(\R)$ is \underline{orthogonal} if $R^T = R^{-1}$. So if $X \in M_n(\R)$, then $e^{tX}$ is orthogonal if and only if $(e^{tX})^T = (e^{tX})^{-1}$, i.e. 
+\[
+e^{(tX)^T} = e^{-tX}
+\]
+
+This in turn happens iff $X^t = -X$. 
+
+So $\mk{o}_n(\R) = \mk{s}o_n(\R) = \{X\in M_n(\R) \mid X^T = -X\}$
+
+\subsection*{\underline{Symplectic groups}}
+
+Recall that
+\[
+\Omega = \pmat{0}{I}{-I}{0}
+\]
+Then 
+\[
+\mk{s}p_n(\R) = \{X \in M_n (\R) \mid \Omega X^T \Omega = X\}
+\]
+\[
+\mk{s}p_n(\C) = \{X \in M_n(\C) \mid \Omega X^T \Omega = X \}
+\]
+and $\mk{s}p_n = \mk{s}p_n(\C) \cap U_{2n}$. 
+
+\subsection*{\underline{Properties of Lie Algebras and matrix groups}}
+
+\prop
+
+Let $G$ be a matrix group with Lie algebra $\mk{g}$, and suppose that $X \in \mk{g}$. Then $e^{X} \in G^\circ$ (meaning the connected component containing the identity). 
+
+\proof
+
+Observe that the continuous path $\Gamma:[0,1]\to G$ defined by $t \mapsto e^{tX}$ connects $I$ to $e^X$
+
+\qed
+
+\prop
+
+Let $G$ be a matrix group with Lie Algebra $\mk{g}$. Suppose that $X \in \mk{g}$ and $A \in G$. Then $AXA^{-1} \in \mk{g}$. 
+
+\proof
+\,
+
+Observe that $e^{t(AXA^{-1})} = Ae^{tX}A^{-1}$, whence the result follows because $e^{tX} \in G$, and $A \in G$
+
+\qed
+
+\prop
+
+Let $G$ be a matrix group with Lie algebra $\mk{g}$, and suppose $X, Y \in \mk{g}$. Then 
+\begin{enumerate}
+
+\item $sX \in \mk{g}$ for all $s \in \R$
+
+\item $X + Y \in \mk{g}$
+
+\item $XY - YX \in \mk{g}$
+
+\end{enumerate}
+
+\proof
+
+\,
+\begin{enumerate}
+
+\item Observe that $e^{t(sX)} = e^{(ts)X} \in G$ for all $t \in \R$.
+
+\item If $XY = YX$, then $e^{t(X + Y)} = e^{tX}e^{tY} \in G$, and this holds for all $t \in \R$. In general, we have
+\[
+e^{t(X + Y)} = \lim_{m\to\oo}(e^{t\frac{X}{m}}\cdot e^{t\frac{Y}{m}})^m
+\]
+This is an invertible limit of elements of $G$, which therefore lies in $G$, as claimed. 
+
+\underline{Remark:} We have no shown that $\mk{g}$ is a real vector space. 
+
+\item Observe that
+\begin{align*}
+\dd{}{t}(e^{tX}Ye^{-tX})|_{t=0} & = (XY)e^0 + (e^0Y)(-X) \\
+										  & = XY - YX \\
+\end{align*}
+
+Now $e^{tX}Ye^{-tX} \in \mk{g}$ for all $t\in\R$. Since $\mk{g}$ is a real vector space, the derivative of a smooth curve in $\mk{g}$ also lies in $\mk{g}$, and hence $XY - YX \in \mk{g}$
+
+\end{enumerate}
+
+\qed
+
+\defn
+
+If $A, B \in M_n(\C)$, we define the \underline{Lie Bracket} $[A,B]$ by 
+\[
+[A,B]\eqdef AB - BA
+\]
+
+We have therefore shown that the Lie Algebra is closed under the Lie Bracket.
+
+\thm
+
+Suppose that $G, H$ are matrix groups with corresponding Lie Algebras $\mk{g}, \mk{h}$. Let $\phi:\mk{g}\to\mk{h}$ be a homomorphism of matrix groups (i.e. a continuous homomorphisms of the underlying groups). 
+
+Then there exists a unique $\R$-linear map $\tilde{\phi}:\g\to\h$ such that the following square commutes:
+\[
+\begin{tikzcd}
+G\ar[r, "\phi"] & H \\
+\g \ar[u, "\exp"] \ar[r,"\tilde{\phi}"] & \h \ar[u, "\exp"']\\
+\end{tikzcd}
+\]
+
+Furthermore,
+\begin{enumerate}
+
+\item If $X \in \g$ and $A \in G$, then 
+\[
+\tilde{\phi}(AXA^{-1}) = \phi(A)\tilde{\phi}(X)\phi(A^{-1})
+\]
+
+\item For all $X, Y \in \g$, we have
+\[
+\tilde{\phi}([X,Y]) = [\tilde{\phi}(X), \tilde{\phi}(Y)]
+\]
+So $\tilde{\phi}$ is a \underline{Lie Algebra homomorphism}
+
+\item If $X \in \g$, then 
+\[
+\tilde{\phi}(X) = \dd{}{t}\phi(e^{tX})|_{t=0} 
+\]
+Note this makes sense because $\phi(e^{tX})$ is a one parameter subgroup of $H$, so is smooth. 
+
+\item If $\psi:H\to K$ is a homomorphism of matrix groups, then $\widetilde{\psi\circ\phi} = \tilde{\psi}\circ\tilde{\phi}$
+
+\end{enumerate}
+
+\proof
+\,
+Observe that since $\phi$ is continuous, $\phi(e^{tX})$ is a one-parameter subgroup of $H \subseteq \GL_n(\C)$. Hence there exists a unique $Z \in \GL_n(\C)$ such that 
+\[
+\phi(e^{tX}) = e^{tZ}
+\]
+ for all $t \in \R$.
+
+It follows also that $Z \in \h$ because $e^{tZ} = \phi(e^{tX}) \in H$ for all $t \in \R$. Set $\tilde{\phi}(X) = Z$. 
+
+Then commutativity of the diagram follows on setting $t = 1$ in the above. 
+
+Let us now show that $\tilde{\phi}$ is $\R$-linear. 
+
+First observe that $\tilde{\phi}(sX) = s\tilde{\phi}(X)$ for all $s \in \R$, because the above equation implies 
+\[
+\phi(e^{tsX}) = e^{tsZ}
+\]
+
+Next: 
+\begin{align*}
+e^{t\tilde{\phi}(X + Y)} & B= e^{\tilde{\phi}(t(X + Y))}\\
+								  & = \phi(\lim_{m\to\oo}(e^{t\frac{X}{m}}\cdot e^{t\frac{Y}{m}})^m) \\
+								 & = \lim_{m\to\oo}(\phi(e^{t\frac{X}{m}})\cdot \phi(e^{t\frac{Y}{m}}))^m \\
+								 & = \lim_{m\to\oo}(e^{t\tilde{\phi}(X)/m}e^{t\tilde{\phi}}(M)/m)^m \\
+								 & = e^{t(\tilde{\phi}(X) + \tilde{\phi}(Y))}
+\end{align*}
+
+Then we differentiate both sides and evaluate at $t = 0$ to obtain
+\[
+\tilde{\phi}(X + Y) = \tilde{\phi}(X) + \tilde{\phi}(Y)
+\]
+So now we have shown that $\tilde{\phi}$ is $\R$-linear.
+
+\section*{Lecture 5 - 1/30/24}
+
+We continue the proof. 
+
+\begin{enumerate}
+
+\item We have 
+\begin{align*}
+\exp(t\tilde{\psi}(AXA^{-1}) & = \phi(\exp(tAXA^{-1}) \\
+									   & \vdots \\
+										& = \phi(A)\exp(t\tilde{\phi}(X))\phi(A)^{-1} \\
+\end{align*}
+Now differentiate both sides at $t = 0:$
+\[
+\tilde{\phi}(AXA^{-1}) = \phi(A)\tilde{\phi}(X)\phi(A)^{-1}
+\]
+
+\item Recall that 
+\[
+[X, Y] = \dd{}{t}(e^{tX}Ye^{-tX})|_{t=0}
+\]
+So 
+\begin{align*}
+\tilde{\phi}[X,Y] & = \tphi(\dd{}{t}(e^{tX}Ye^{-tX})|_{t=0} \\
+& = \dd{}{t}\tphi(e^{-tX}Ye^{-tX})|_{t=0} \\
+& = \dd{}{t}e^{t\tphi(X)}\tphi(Y)e^{-t\tphi(X)} \\
+& = [\tphi(X),\tphi(Y)]
+\end{align*}
+
+\item
+
+Suppose that $\eta$ is another sudch map. Then
+\begin{align*}
+e^{t\eta(X)} & =e^{\eta(tX)} \\
+& = \phi(tX) \\
+\end{align*}
+
+So
+\[
+\eta(X) = \dd{}{t}\phi e^{tX}|_{t=0}
+\]
+Whence $\eta=\tphi$
+
+\item Exercise
+
+\end{enumerate}
+
+\qed
+
+\subsection*{\underline{Adjoint Maps}}
+
+\defn
+
+Let $G$ be a matrix group with Lie Algebra $\g$. For each element $A \in G$, we define its \underline{adjoint map} as a linear map by
+\[
+\Ad_A:\g\to\g
+\]
+by
+\[
+X\mapsto AXA^{-1}
+\]
+
+We write $\Ad$ for the map $A \mapsto \Ad_A$. 
+
+\prop
+
+For each $A \in G$, $\Ad_A\in\GL(\g)$, and $(\Ad_A)^{-1} = \Ad_{(A^{-1})}$.
+
+The map $\Ad:G\to\GL(\g)$ is a homorphism of matrix groups. Further, 
+\[
+\Ad_A[X,Y] = [\Ad_A(X),\Ad_A(Y)]
+\]
+for all $X, Y \in \g$. 
+
+\proof
+
+Exercise
+
+\qed
+
+It follows that (viewing $\GL(\g)$ as a matrix group) there is a map 
+\[
+\tilde{\Ad}\eqdef \ad:\g\to\GL(\g)
+\]
+defined by 
+\[
+X\mapsto \ad_X
+\]
+
+Such that
+\[
+e^{\ad_X} = \Ad_{e^X}
+\]
+for all $X \in G$
+
+\prop
+
+Let $G$ be a matrix group with Lie Algebra $\g$. Then for all $X, Y \in \g$, we have
+\[
+\ad_X(Y) = [X,Y]
+\]
+
+\proof
+
+Recall from the contruction of $\tphi$ given earlier that we have
+\[
+\ad_X = \dd{}{t}(\Ad_{e^{tX}})|_{t=0}
+\]
+Hence
+\[
+\ad_X(Y) = \dd{}{t}(e^{tX}Ye^{-tX})|_{t=0} = [X,Y]
+\]
+
+\qed
+
+\subsection*{\underline{The Exponential Mapping}}
+
+\defn
+
+If $G$ is a matrix group with Lie Algebra $\g$, then the 
+
+\underline{exponential map for $G$} is the map 
+\[
+\exp:\g\to G
+\]
+In general, this is neither injective nor surjective. However, locally it is a homeomorphism. 
+
+\thm
+
+If $G$ is a matrix group with Lie Algebra $\g$, then there exists an open neighborhood $U$ of zero in $\g$ and $V$ of $I$ in $G$ such that $\exp$ maps $U$ homeomorphically onto $V$.
+
+\proof
+
+We already know that this result holds for $\GL_n(\C)$ because of what we've proven about the logarithm. 
+
+To prove the result in general, we need a preparatory lemma:
+
+\lem
+
+Suppose that $\{g_n\}\in G^\N$ and that $g_n\to I$. Let $y_n = \log(g_n)$ and note that this is defined for all sufficiently large $n$. 
+
+Suppose that 
+\[
+y_n/\norm{y_n} \to y \in \g l_n(\C)
+\]
+Then $y\in\g$
+
+\proof
+\,
+
+We want to show that $\exp(ty)\in G$ for all $t \in \R$. 
+
+We first observe that $(t/\norm{y_n})y_n\to ty$ as $n\to\oo$. Since $g_n \to I$, it follows that $y_n \to 0$, and so $\norm{y_n}\to0$. 
+
+We define $m_n = [\frac{t}{\norm{y_n}}]$, where $[-]$ means the integer part. 
+
+Then $m_n\norm{y_n} \to t$ as $n\to\oo$
+
+So 
+\[
+\exp(m_ny_n) = \exp(m_n\norm{y_n}(\frac{y_n}{\norm{y_n}}) \to \exp(ty)
+\]
+as $n\to\oo$. However, 
+\begin{align*}
+\exp(m_ny_n) & = \exp(y_n)^{m_n} \\
+& = (g_n)^{m_n} \\
+& \in G
+\end{align*}
+
+Since $G$ is closed, we deduce that $\exp(ty) \in G$. $t$ was arbitrary, so we are done. 
+
+\qed
+
+Back to the proof of the theorem. We have $\g l_n(\C) \cong C^{n^2} = \R^{2n^2}$. We view $\g$ as a subspace of $\R^{2 n^2}$. Write $\mc{D}$ for the orthogonal complement of $\g$ under the standard inner product on $\R^{2n^2}$. Consider the map $\Phi:\g\oplus\mc{D} \to \GL_n(\C)$ defined by $(X, Y) \mapsto e^Xe^Y$. 
+
+We view $\Phi$ as a map from $\R^{2n^2}\to\R^{2n^2}$. Note that $\GL_n(\C)$ may be viewed as an open subset of $\g l_n(\C) \cong \R^{2n^2}$.
+
+Now we show that $\Phi$ is locally invertible at the origin: we have
+\[
+\dd{}{t}\Phi(tX, 0)|_{t=0} = X
+\]
+\[
+\dd{}{t}\Phi(0, tY)|_{t=0} = Y
+\]
+So the derivative at the origin is the identity map, which is invertible. The Inverse Function Theorem now implies that $\Phi$ has a continuous local inverse defined in an open neighborhood of $I$. 
+
+Now let $U$ be any open neighborhood of $0$ in $\g$.
+
+\claim
+
+$\exp(U)$ contains an open neighborhood of $I$. 
+
+\proof
+
+Suppose not. Then we may find a sequence $\{g_n\} \in G^\N$ such that $g_n \to I$ and such that no $g_n$ lies in $\exp(U)$. But since $\Phi$ is locally invertible at $I$, it follows that for large $n$ we may write (uniquely) 
+\[
+g_n = \exp(X_n)\exp(Y_n)
+\]
+where $X_n\in\g, Y_n\in\mc{D}$. Now, $g_n\to I$ and $\Phi^{-1}$ is continuous, so $X_n, Y_n \to 0$. So for large $n$, $X_n \in U$, and so we must have $Y_n\neq0$. Otherwise, we would have $g_n \in \exp(U)$. 
+
+Now set 
+\[
+\tilde{g_n} = \exp(Y_n)= \exp(-X_n)g_n
+\]
+Thus $\tilde{g_n} \in G$ and $\tilde{g_n}\to I$
+
+As the unit ball in $\mc{D}$ is compact, we may choose a subsequence of $Y_n$, which after relabeling we still call $Y_n$, such that $Y_n/\norm{Y_n} \to Y$, whence $Y \in \mc{D}$ and $\norm{Y}=1$.
+
+Now our preparatory lemma implies that $Y \in \g$, contradicting the fact that $\g \perp \mc{D}$. This establishes the claim, namely that if $U$ is an open neighborhood of 0 in $\g$, then $\exp(U)$ contains an open neighborhood of $I$ in $G$.
+
+If $U$ is sufficiently small, then $\exp$ is injective on $\bar{U}$ (the existence of the matrix logarithm implies that $\exp$ is injective near 0). 
+
+Let $\log$ denote the inverse map defined on $\exp(\bar{U})$. Then $\log$ is continuous because $\bar{U}$ is compact and $\exp$ is 1-1 and continuous. Now let $V \subseteq \exp(\bar{U})$ be an open neighborhood of $I$ and set $U_1 = \log(V)$. Then $U_1$ is open and $\exp|_{U_1}\to V$ is a homeomorphism. 
+
+This completes the proof. 
+
+\qed
+
+\subsection*{\underline{Lie Algebras}}
+
+\defn
+
+A \underline{Lie Algebra} over a field $F$ is a vector space $\g$ equipped with a product $[-,-]:\g\times\g\to\g$ satisfying the following properties:
+
+\begin{enumerate}
+
+\item $[-,-]$ is bilinear
+
+\item $[X,X]=0$ (hence in particular $[X,Y] = -[Y,X]$). 
+
+\item The Jacobi Identity:
+\[
+[[X, Y], Z] + [[Y,Z],X] + [[Z,X],Y] = 0
+\]
+
+\end{enumerate}
+
+We've seen many examples. Here is another:
+
+\defn
+
+If $A$ is an associative $F$-algebra, then define $[-,-]:A\times A \to A$ by 
+\[
+[X,Y] \eqdef XY - YX
+\]
+This gives $A$ the structure of a Lie Algebra. 
+
+\defn
+
+If $\g_1, \g_2$ are Lie Algebras, then a \underline{Lie algebra homomorphism} is an $F$-linear map $\phi:\g_1\to\g_2$ satisfying 
+\[
+\phi[X,Y] = [\phi(X),\phi(Y)]
+\]
+
+\defn
+
+Suppose that $U_1, U_2$ are subspaces of a Lie algebra $\g$. Define
+\[
+[U_1,U_2] = \operatorname{span}\{[u_1, u_2] \mid u_i \in U_i, i = 1, 2\} \}
+\]
+
+\section*{Lecture 6 - 2/1/24}
+
+It's time for more definitions and adjectives. 
+
+\defn
+
+A \underline{subalgebra} $\h$ of a Lie algebra $\g$ is a subspace of $\g$ satisfying $[\h,\h]\subseteq\h$. 
+
+\defn
+
+An \underline{ideal} $\h\subseteq\g$ is a subalgebra which satisfies $[\h,\g]\subseteq\h$. 
+
+If $\h_1,\h_2$ are ideals in $\g$, then so is $[\h_1,\h_2]$. 
+
+\defn
+
+We say a Lie algebra $\g$ is \underline{simple} if the only ideals of $\g$ are $\g$ and 0 and $\dim\g \geq2$. 
+
+\defn
+
+We say that $\g$ is \underline{abelian} if $[\g,\g]=0$. So if $\g$ is abelian and $\dim \g\geq2$, then $\g$ is simple. 
+
+\defn
+
+A \underline{lower central series} is a sequence
+
+\[
+\g = \g^1 \supseteq \g^2 \supseteq \g^3 \supseteq \cdots
+\]
+
+of ideals of $\g$, generated inductively by letting $\g^{n + 1} = [\g,\g^n]$. 
+
+\defn
+
+We say $\g$ is \underline{nilpotent} if $\g^i = 0$ for large $i$. 
+
+Every Abelian $\g$ is nilpotent. So is 
+\[
+\g = \{A \in M_n(\F) \mid A_{ij} = 0 \forall i \geq j\}
+\]
+
+\defn
+
+We define a descending chain by 
+\[
+\g^{(0)} = \g \supseteq \g^{(1)} \supseteq \g^{(2)} \supseteq \cdots
+\]
+
+of ideals of $\g$ inductively by $\g^{(n + 1)} = [g^{(n)}, \g^{(n)}]$. 
+
+\defn
+
+We say that $\g$ is \underline{soluble} if $\g^{(i)} = 0$ for large $i$. 
+
+\prop
+
+Every nilpotent Lie algebra is soluble. 
+
+\proof
+
+Exercise
+
+\defn
+
+We say that $\g$ is \underline{semi-simple} if it has no non-zero soluble ideals. 
+
+\subsection*{\underline{Representations}}
+
+Suppose that $\g$ is a Lie algebra over a field $\F$. 
+
+\defn
+
+A \underline{representation} of $\g$ is a homomorphism 
+\[
+\rho:\g\to\g l_n(\F) = [\End(\F^n)]
+\]
+
+for some $n$.
+
+We say that two such representations $\rho_1, \rho_2$ are \underline{equivalent} if there is $T \in \GL_n(\F)$ such that
+\[
+\rho_1(X) = T^{-1}\rho_2(X)T
+\]
+
+\defn
+
+A \underline{left $\g$-module} is an $\F$-vector space $V$ equipped with a left action 
+\[
+\g\times V \to V: (x, v) \mapsto x\cdot v
+\]
+such that
+\begin{enumerate}
+
+\item The map $(x, v) \mapsto x\cdot v$ is bilinear
+
+\item We have
+\[
+[x,y]\cdot v = x\cdot(y\cdot v) - y\cdot(x\cdot v)
+\]
+for all $x, y \in \g, v \in V$
+
+\end{enumerate}
+
+Every finite-dimensional $\g$-module yields a representation of $\g$ in the usual way. 
+
+\defn
+
+The \underline{adjoint module} is $\g$ viewed as a module over itself, and the corresponding representation is called the \underline{adjoint representation}. 
+
+\underline{Notation}
+
+If $U$ is a subspace of $V$, and $\h$ is a subspace of $\g$, then we write
+\[
+[\g,U] = \operatorname{Span}\{[X, u] \mid X \in \h, u \in U)\}
+\]
+
+\defn
+
+We say that $U$ is a \underline{submodule} of $V$, $[\g,U] \subseteq U$. 
+
+Say that $V$ is \underline{irreducible} if its only submodules are $V$ and 0. 
+
+\subsection*{\underline{Representations of compact matrix groups}}
+
+\thm
+
+Suppose that $G$ is a unitary group and that 
+\[
+\Pi:G\to \GL(V)
+\]
+is a finite dimensional unitary representation. Then $\Pi$ is completely reducible. 
+
+If $\g$ is a real Lie algebra and $\pi:\g\to\g l(V)$ is finite-dimensional and unitary (i.e. $\pi(X)^* = -\pi(X)$ for all $X \in \g$), then $\pi$ is completely reducible. 
+
+\proof
+
+Let $\langle-,-\rangle$ be the inner product on $V$, and suppose that $W$ is an invariant subspace for $\Pi$ or $\pi$. Then 
+\[
+V = W \oplus W^\perp
+\]
+and $W^\perp$ is an invariant subspace (Check this!). The result follows by induction on the dimension of $V$.
+
+(Bisi is using unitary to mean "preserves an inner product")
+
+\qed
+
+\thm
+
+Suppose that $G$ is a compact matrix group. Then every finite dimensional representation of $G$
+\[
+\Pi:G\to\GL(V)
+\]
+is unitary (and so by the previous theorem is completely reducible). 
+
+\proof
+
+The key point is that there is a left-invariant Haar measure $d\mu$ on $G$ (which here may be constructed explicitly using the existence of a volume form on $G$). 
+
+If $\langle -, - \rangle$ is any inner product on $V$ define another inner product $\langle-,-\rangle_G$ on $V$ by 
+\[
+\langle v,w\rangle_G = \int_G\langle \Pi(g)v, \Pi(g)w\rangle\,d\mu
+\]
+
+This integral converges because of compactness. 
+
+\subsection*{\underline{Representations of $\mk{s}l_2(\C)$}}
+
+Here is a basis of $\mk{s}l_2(\C)$: 
+\[
+X = \pmat{0}{1}{0}{0}, Y = \pmat{0}{0}{1}{0}, H = \pmat{1}{0}{0}{-1}
+\]
+
+Here are some relations:
+\[
+[H,X] = 2X, [H, Y] = -2Y, [X, Y] = H
+\]
+
+Suppose that 
+\[
+\pi:\mk{s}l_2(\C)\to \g l(V)
+\]
+is an irreducible representation of $\mk{s}l_2(\C)$
+
+(recall $\g l(V)$ is the Lie algebra of the matrix group $\GL(V)$)
+
+\lem
+
+Suppose that $u$ is an eigenvalue of $H$ with eigenvalue $\alpha$. Then
+\[
+\pi(H)\pi(X)u = (\alpha + 2)\pi(X)u
+\]
+Henve either $\pi(X)u = 0$ or $\pi(X)u$ is an eigenvalue of $\pi(H)$ with eigenvalue $\alpha + 2$. 
+
+Similarly, 
+\[
+\pi(H)\pi(Y)u = (\alpha - 2)\pi(Y)u
+\]
+so a similar statement holds. 
+
+Here we have not in fact assumed that $V$ is irreducible. 
+
+\proof
+
+We have $e.g.$ 
+\[
+[\pi(H),\pi(X)] = \pi(([H,X])) = 2\pi(X)
+\]
+
+and so 
+
+\begin{align*}
+\pi(H)\pi(X)u & = \pi(X)\pi(H)u + 2\pi(X)u\\
+				& = \pi(X)(\alpha u) + 2\pi(X)u \\
+& = \pi(\alpha + 2)\pi(X)u
+\end{align*}
+
+\qed
+
+\thm 
+
+For each integer $m \geq0$, there is an irreducible complex representation of $\mk{s}l_2(\C)$ of dimension $m + 1$, and any two such representations are isomorphic. 
+
+\proof
+
+Let $u$ be an eigenvector for $\pi(H)$ with eigenvalue $\alpha$. 
+
+Then for each $k \geq0$, we have
+\[
+\pi(H)\pi(X)^ku = (\alpha + 2k)\pi(X)^ku
+\]
+
+Choose $N \geq 0$ to be the largest integer satisfying $\pi(X)^Nu \neq 0$ (this exists as $\pi(H)$ has only finitely many eigenvalues)
+
+Set $\lambda = \alpha + 2N$
+
+For each $k\geq0$, set
+\[
+u_k = \pi(Y)^ku
+\]
+
+Check that we have the following relations:
+\[
+\pi(H)u_k = (\lambda- 2k)u_k
+\]
+Set $u_0 = \pi(X)^Nu$, so $\pi(X)u_0 = 0$. So by induction, $\pi(X)u_k = k[\lambda-(k-1)]u_{k-1}, (k\geq1)$
+
+Choose $m$ maximal so that 
+\[
+u_k = \pi(Y)^ku_0 \neq0
+\]
+for all $k\leq m$ but $u_{m+1} = 0$.
+
+Then $\pi(X)u_{m+1}=0$ and so we have
+\[
+0 = \pi(X)u_{m+1} = (m + 1)(\lambda-m)u_m
+\]
+But $m + 1 \neq 0, u_m \neq 0$, whence it follows that $\lambda = m$. 
+
+We deduce that $u_1, \dots, u_m$ are linearly independent and $V = \operatorname{span}\{u_1, \dots, u_m \}$.
+
+\qed
+
+\section*{Lecture 7 - 2/6/24}
+
+\thm 
+
+Suppose that $\pi:\mk{s}l_2(\C)\to \g l(V)$ is a (not necessarily irreducible) finite dimensional representation of $\mk{s} l_2(\C)$. Recall that we have a basis: 
+\[
+X = \pmat{0}{1}{0}{0}, Y = \pmat{0}{0}{1}{0}, H = \pmat{1}{0}{0}{-1}
+\]
+of $\mk{s}l_2(\C)$. Then:
+
+\begin{enumerate}
+
+\item Every eigenvalue of $\pi(H)$ is an integer
+
+\item $\pi(X)$ and $\pi(Y)$ are nilpotent
+
+\item Define $S \in \GL(V)$ by 
+\[
+S = e^{\pi(X)}e^{-\pi(Y)}e^{\pi(X)}
+\]
+then $S\pi(H)S^{-1} = -\pi(H)$. 
+
+\item If $k$ is an eigenvalue of $\pi(H)$, then the rest are
+\[
+\cdots, -|k|, -|k| + 2, \dots, |k| - 2, |k|, \cdots
+\]
+
+\end{enumerate}
+
+\proof
+
+Exercise, using what we did last time: for (1) and (4), look at what $\pi(X),\pi(Y)$ do to an eigenvector of $\pi(H)$.
+
+For (2), take a basis of generalized eigenvectors of $\pi(H)$ and consider $\pi(X)v,\pi(Y)v$, for a basis vector $v$. 
+
+For (3), use
+\begin{align*}
+e^{\pi(X)}\pi(H)e^{\pi(X)} & = \Ad_{e^{\pi(X)}}(\pi(H)) \\
+									 & = e^{\ad_{\pi(X)}}(\pi(H)) \\
+									 & = \pi(H) + [\pi(X),\pi(H)] + \dots \\
+								    & = \pi(H) - 2\pi(X)
+\end{align*}
+etc. 
+
+\subsection*{\underline{Prototypical example: $\mk{s}l_n(\C)$}}
+
+Recall that $\mk{s}l_n(\C)$ consists of $n\times n$ complex matrices with trace 0. 
+
+If $X \in \mk{s}l_2(\C)$ and $A \in \g l_n(\C)$, then
+\[
+\tr([X,A]) = \tr(XA - AX) = 0
+\]
+
+and so $\mk{s}l_n(\C)$ is an ideal in $\g l_n(\C)$. In particular, $\g l_n(\C)$ is not simple. 
+
+\prop
+
+$\mk{s} l_n(\C)$ is simple for $n\geq2$.
+
+\proof
+
+We sketch the main idea. Suppose that $\mk{k}$ is a non-zero ideal of $\mk{s}l_n(\C)$. Write $E_{ij}$ for the elementary matrix with $1$ in the $ij$ position and 0 elsewhere.
+
+Suppose that $A\in\mk{k}, A\neq0$. Via considering $[A,E_{ij}]\in\mk{k}$, who that $\mk{k}$ contains an elementary matrix $E_{ij}$.
+
+\[
+[A,E_{ij}]_{k\ell} = A_{ki}\delta_{kj} - \A_{jk}\delta_{ji} (\text{bisi thinks, etc})
+\]
+
+Then via $[E_{ji},E_{jk}] = E_{ik}$, etc, show that $\mk{k} = \mk{s}l_n(\C)$
+
+\qed
+
+Set
+\[
+\h = \{h \in \mk{s}l_n(\C) \mid h\text{ is diagonal }\}
+\]
+
+Easy check - $[\h, \h] = 0$, and so $\h$ is Abelian. (Note that $\h$ is a subalgebra of $\mk{s}l_n(\C)$) of dimension $n - 1$).
+
+Now view $\mk{s}l_n(\C)$ as being a left $\h$-module. 
+
+\claim
+
+$\C\cdot E_{ij}$ is a one-dimensional $\h$-submodule of $\mk{s}l_2(\C)$
+
+\proof
+
+\qed
+
+If $h = \begin{pmatrix} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \\\end{pmatrix}$, then $[h, E_{ij}] = (\lambda_i-\lambda_j)E_{ij}$. 
+
+So we have a decomposition 
+\[
+\mk{s}l_n(\C) = \h \oplus \sum_{i\neq j}\C\cdot E_{ij}
+\]
+
+Observe that each $\h$-module $\C\cdot E_{ij}$ yields a 1-dimensional representation of $\h$. Define $\varepsilon_{ij}:\h\to\C$ by $\begin{pmatrix} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \\\end{pmatrix}\mapsto \lambda_i-\lambda_j$
+
+The set $\Phi$ of $n(n-1)$ representations of $\h$ that arise in this way are called the \underline{set of roots of $\mk{s}l_n(\C)$ with respect to $\h$}. 
+
+So $\Phi \subseteq \Hom(\h,\C)$
+
+\underline{Some properties of $\Phi$}
+
+\begin{enumerate}
+
+\item If $\alpha\in \Phi$, then $-\alpha\in\Phi$ also
+
+(For if $\alpha = \varepsilon_{ij}$, then $-\alpha = \varepsilon_{ji}$)
+
+\item Define $\alpha_i\in\Phi$ by $\alpha_i = \varepsilon_{i,i+1}$. Then the set $\Pi = \{\alpha_1, \dots, \alpha_{n-1}\}$ of \underline{fundamental roots} is a basis of $\Hom(\h, \C)$
+
+\item Observe that we have $\varepsilon_{ij} = \begin{cases} \alpha_i + \alpha_{i + 1} + \cdots + \alpha_{j-1} & i < j \\ -(\alpha_j + \alpha_{j+1} + \cdots + \alpha_{i-1}) & i > j \\ \end{cases}$
+
+\end{enumerate}
+
+So we may write $\Phi = \Phi^+ \coprod \Phi^-$ where $\Phi^+$ consists of positive integer combinations of elements of $\Pi$, and $\Phi^-$ consists of negative integer combinations of elements of $\Pi$
+
+
+\subsection*{\underline{(Semi)Simple Lie Algebras}}
+
+\defn
+
+Suppose that $\g$ is a Lie algebra over $\C$, and let $\h$ be a subalgebra of $\g$
+
+Define the \underline{idealizer} $I(\h)$ of $\h$ in $\g$ by 
+\[
+I(\h) = \{X\in \g \mid [X, \h]\subseteq\h \}
+\]
+
+Then $I(\h)$ is a subalgebra of $\g$ and $\h$ is an ideal of $I(\h)$. (In fact, $I(\h)$ is the largest subalgebra of $\g$ in which $\h$ is an ideal). 
+
+We say that $\h$ \underline{satisfies the idealizer condition} if $I(\h) = \h$ if $I(\h) = \h$. 
+
+Recall that a Lie algebra $\g$ is nilpotent if $\g^(i) = 0$ for large $i$, where $\g^(n) = [\g, \g^{(n-1)}]$, and $\g^{(0)} = \g$.
+
+\defn
+
+Say that $\h$ is a \underline{Cartan subalgebra of $\g$} if $\h$ is nilpotent and $\h$ satisfies the idealizer condition. 
+
+With this definition, one has the following result. 
+
+\thm
+
+Every finite-dimensional Lie algebra $\g$ has a Cartan subalgebra, and any two Cartan subalgebras are conjugate via an automorphism of $\g$. 
+
+\proof 
+
+See section 15 and 16 of Humphreys.  
+
+The idea is that for each $X \in \g, \lambda\in\C$, we define 
+\[
+L_{\lambda,X} \eqdef \{Y \in \g \mid (\ad_X-\lambda I)^iY = 0\text{ for some integer $i\geq1$} 
+\]
+i.e. this is the $\lambda$-generalized eigenspace in $\g$ of $\ad_X$. 
+
+Then (math 108A), 
+\[
+\g = \oplus_{\lambda}L_{\lambda,X}
+\]
+
+Say that $X$ is \underline{regular} if $\dim(L_{0,X})$ is minimal (as this varies over $X$) 
+
+Then if $X$ is regular, $L_{0,X}$ is a Cartan subalgebra of $\g$. 
+
+\qed
+
+\defn 
+
+Say that a Lie algebra $\g$ is \underline{semisimple} if it has no nonzero soluble ideals. 
+
+\defn
+
+Say that a Lie algebra $\g$ is \underline{reductive} if there exists a compact matrix group $K$ with Lie algebra $\mk{k}$ such that $\g$ is isomorphic to $\mk{k}_\C$, which is $\mk{k}$ with the scalars extended, i.e. $\mk{k}_\C = \mk{k}\otimes_\R\C$
+
+\exm
+
+We have $u_n\otimes_\R\C\cong\g l_n(\C)$
+
+For if $X \in M_n(\C)$, then we have
+\[
+X = \frac{X - X^*}{2} + i\frac{X + X^*}{2} \in u + iu
+\]
+
+But also note that
+\[
+\g l_n(\C) \cong \g l_n(\R)\otimes_\R\C
+\]
+
+despite the fact that $\GL_n(\R)$ is \underline{not} compact.
+
+If $\g$ is reductive, then it carries an inner product with nice properties. 
+
+\section*{Lecture 8 - 2/8/24}
+
+Recall that $\g$ is \underline{reductive} if there exists a compact matrix group $K$ with lie algebra $\mk{k}$ such that 
+\[
+\g = \mk{k} \otimes_\R\C = \mk{k}_\C
+\]
+
+If $\g$ is reductive, then it carries an inner product with nice properties:
+
+\prop
+
+Suppose that $\g = \mk{k}_\C$ is a reductive Lie algebra. Then there exists an inner product on $\g$ that is real valued on $\mk{k}$ and which satisfies the following:
+\[
+\langle \ad_X(Y), Z \rangle = -\langle Y, \ad_X(Z)\rangle
+\]
+for all $X \in \mk{k}, Y, Z \in \g$. Further, if we define
+\[
+(X_1 + iX_2)^* \eqdef -X_1 + iX_2
+\]
+where $X_1, X_2 \in \mk{k}$, then the above inner product also satisfies 
+\[
+\langle \ad_X(Y),Z \rangle = \langle Y, \ad_{X^*}(Z)\rangle
+\]
+for all $X, Y, Z \in \g$
+\proof
+
+The $\R$-valued $K$-invariant (under the adjoint action) inner product on $\mk{k}$ extends to an inner product on $\g$ for which the adjoint action of $K$ is unitary.  
+
+The corresponding adjoint actions of $\mk{k}$ is then also unitary. 
+
+\qed
+
+\thm
+
+Let $\g$ be a finite dimensional Lie algebra over $\C$. Then the following are equivalent: 
+\begin{enumerate}
+
+\item $\g$ is semi-simple 
+
+\item $\g$ is a direct sum of simple Lie algebras 
+
+\item $\g$ is reductive with trivial center. \,
+
+(In this case, we say that $\mk{k}$ is a \underline{compact real form for $\g$})
+
+\end{enumerate}
+
+We use (3) as our definition of ``semisimple."
+
+\proof
+
+\qed
+
+\underline{Recall:} If $A \in M_n(\C)$ with $AA^* = A^*A$, then $A$ is diagonalizable (and $\C^n$ admits an orthonormal eigenbasis for $A$) 
+
+\thm
+
+Suppose $\g = \mk{k}_\C$ is a finite-dimensional complex semisimple Lie algebra, and let $\h$ be a Cartan subalgebra for $\g$. Then:
+\begin{enumerate}
+
+\item $\h$ is abelian
+
+\item The centralizer of $\h$ in $\g$ is $\h$
+
+\item If $H\in\h$, then $\ad_H:\g\to\g$, is diagonalizable. 
+\,
+(In fact $\h$ is a maximal subalgebra of $\g$ consisting of semisimple (i.e. diagonalizable) elements)
+
+\end{enumerate}
+
+\thm
+
+With notation as above, let $\mk{t}$ be any maximal commutative subalgebra of $\mk{k}$. Then 
+\[
+\h = \mk{t}\otimes_\R\C = \mk{t}_\C
+\]
+is a maximal Cartan subalgebra of $\g$. 
+
+\proof
+
+\claim
+
+$\h$ is a maximal commutative subalgebra of $\g$
+
+\proof
+
+Suppose $X \in \g$. Then we may write (uniquely!)
+\[
+X = X_1 + i X_2
+\]
+with $X_1, X_2\in\mk{k}$. So if $[X,\h] = 0$, then $[X_1,\h]=0,[X_2,\h]=0$. This can only happen if $X_1, X_2 \in \mk{t}$, and so $X \in \h$. This proves the claim 
+
+\qed
+
+If $X \in \mk{k}$, then $\ad_X:\mk{k}\to\mk{k}$ is skew self-adjoint (because $\mk{k}$ admits a $K$-invariant inner product). This extends to an inner product on $\g$ and so $\ad_X$ is diagonalizable. 
+
+This implies that the elements of $\{\ad_Y:\mk{k}\to\mk{k}\mid Y \in \mk{t}\}$ are simultaneously diagonalizable (as these elements commute). Deduce from this that the elements of $|h$ are simultaneously diagonalizable as well. 
+
+\qed
+
+\defn
+
+The \underline{rank} of a semisimple Lie algebra $\g$ is the dimension of any Cartan subalgebra.
+
+Observe that the restriction of the inner product $\langle-,-\rangle:\g\times\g\to\C$ to $\h$ induces an identification of $\h$ with its dual:
+\begin{align*}
+\h & \to \Hom(\h,\C)\\
+\alpha&\mapsto \{H\mapsto \langle \alpha, H \rangle \}
+\end{align*}
+
+\defn
+
+Say that $\alpha\in\h$ ($\alpha\neq0$) is a \underline{root} (relative to $\h$) if there exists $\g\ni X\neq0$ such that
+\[
+[H,X] = \langle \alpha, H \rangle X
+\]
+for all $H \in \h$. We say that $X$ is a \underline{root vector for $\alpha$}
+
+We write $R$ for the set of roots in $\g$. Define the \underline{root space} $\g_\alpha$ to be the set of root vectors for $\alpha$. 
+
+\prop
+\,
+\begin{enumerate}[label=(\alph*)]
+
+\item Each root $\alpha$ lies in $i\mk{t}\subseteq\h$ 
+
+\item We have $\g_0= \h$
+
+\end{enumerate}
+
+\proof
+\,
+\begin{enumerate}[label=(\alph*)]
+
+\item Suppose that $H \in \mk{t}$. Then $\ad_H$ is skew self-adjoint on $\h$ and so has pure imaginary eigenvalues. So if $\alpha\in\h$ is a root, then $\langle\alpha, H\rangle$ must be pure imaginary. Since $\langle-,-\rangle$ is real on $\mk{t}$, it follows that $\alpha\in i\mk{t}$. 
+
+\item We have 
+\[
+\g_0 = \{X\in\g\mid \h, X] = 0\} = \h
+\]
+because $\h$ is a maximal commutative subalgebra of $\g$. 
+
+\end{enumerate}
+
+\qed
+
+\thm 
+
+The Lie algebra $\g$ may be written as the following direct sum of vector spaces
+\[
+\g = \h \oplus \left(\bigoplus_{\alpha\in R}\g_\alpha \right)
+\]
+
+\proof
+
+Follows from the fact the elements of $\h$ are simultaneously diagonalizable. 
+
+\qed
+
+\prop
+
+For any $\alpha,\beta \in R$, we have
+\[
+[\g_\alpha,\g_\beta] \subseteq \g_{\alpha+\beta}
+\]
+
+\proof
+
+Suppose that $X \in \g_\alpha,Y\in\g_\beta$. Then
+\begin{align*}
+[H,[X,Y]] & = [[H,X],Y] + [X,[H,Y]] \\
+& = [\langle\alpha, H \rangle X, Y] + [X, \langle \beta, H\rangle Y] \\
+& = \langle\alpha + \beta, H \rangle[X,Y] \\
+\end{align*}
+So $[X,Y]\in\g_{\alpha+\beta}$. 
+
+\qed
+
+\prop
+
+\,
+\begin{enumerate}
+
+\item Suppose that $\alpha\in R$ and $X \in \g_\alpha$. Then $X^* = \g_{-\alpha}$ and so $-\alpha\in R$ also. 
+
+\item The roots of $\g$ span $\h$. 
+
+\end{enumerate}
+
+\proof
+
+\,
+
+\begin{enumerate}
+
+\item Suppose that $X \in \g$ with $X = X_1 + iX_2$, $(X_1, X_2 \in \mk{k})$ and define
+\[
+\bar{X} = X_1 - iX_2 = -X^*
+\]
+Then if $H\in\h$, we have
+\begin{align*}
+\bar{[X,H]} & = [H,X_1] - i[H,X_2] \\
+&= [H,\bar{X}]
+\end{align*}
+
+So if $X \in \g$ with $\alpha \in i\mk{t}$ and if $H \in \mk{t}$, then 
+\begin{align*}
+[H,\bar{X}] & = \bar{[H,X]} \\
+& = \bar{\langle \alpha, H \rangle X } \\
+& = -\langle\alpha, H \rangle \bar{X}
+\end{align*}
+because $\langle\alpha, H\rangle$ is pure imaginary. So, via linearity, 
+\[
+[H,\bar{X}] = -\langle\alpha,H\rangle\bar{X}
+\]
+for all $H \in \h$. 
+
+Hence $\bar{X} \in \g_{-\alpha}$ and so $X^* \in \g_{-\alpha}$.
+
+\item Suppose not. Then there exists $\h\ni H\neq0$ such that $\langle\alpha, H \rangle = 0$ for all $\alpha\in R$. We then have
+\begin{enumerate}
+
+\item $[H,\h] = 0$ and 
+
+\item If $\alpha\in R$ and $X \in \g_\alpha$, then 
+\begin{align*}
+[H,X] = \langle \alpha, H \rangle X \\
+& = 0 
+\end{align*}
+
+\end{enumerate}
+
+BY these two facts, imply that $H$ lives in the center of $\g$, which is trivial. 
+
+\end{enumerate}
+
+\section*{Lecture 9 - 2/13/24}
+
+To continue our analysis, we are going to find lots of copies of $\mk{s} l_2(\C)$ in $\g$. We make use of the following lemma:
+
+\lem
+
+Suppose that $X \in \g_\alpha, Y \in \g_{-\alpha}$, and $H \in \h$. Then 
+\begin{enumerate}[label=(\alph*)]
+
+\item $[X, Y] \in \h$
+
+\item $\langle [X, Y ], H \rangle = \langle\alpha, H\rangle \langle Y, X^* \rangle$
+
+\end{enumerate}
+
+\proof
+\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item We have $[X, Y] \in \g_{\alpha-\alpha} = \g_0 = \h$ 
+
+\item 
+\begin{align*}
+\langle [X, Y], H \rangle &  = \langle\ad_X(Y),H\rangle \\&= \langle Y, \ad_{X^*}(H)\rangle\\&= -\langle Y, [H,X^*]\rangle \\ & = -\langle Y, \langle-\alpha, H \rangle X^*\rangle \\
+& = \langle\alpha, H\rangle\langle Y, X^*\rangle
+\end{align*}
+
+\end{enumerate}
+
+\qed
+
+\thm
+
+Suppose that $\alpha\in R$. Then there exist linearly independent elements $X_\alpha\in\g_{\alpha},Y_\alpha=X_\alpha^*\in\g_{-\alpha}$, $H_\alpha\in\h$, such that $H_\alpha$ is a multiple of $\alpha$ and such that 
+\[
+[H_\alpha,X_\alpha] = 2H_\alpha, [H_\alpha,Y_\alpha] = -2Y_\alpha, [X_\alpha,Y_\alpha] = H_\alpha
+\]
+
+\proof
+
+Let $X \in \g_\alpha$ be nonzero. Then $X^*=-\bar{X}\in\g_{-\alpha}$ is also nonzero. 
+
+\claim
+$[X,X^*]\in\h$ is a multiple of $\alpha$. 
+
+\proof
+
+Applying the immediately preceding lemma, with $Y = X^*$, gives the following:
+\begin{align*}
+\langle[X,X^*],H\rangle & = \langle\alpha,H\rangle\langle X^*, X^*\rangle \\ 
+\end{align*}
+So $\langle[X,X^*],H\rangle=0 \iff \langle\alpha, H \rangle = 0$, and from this we deduce that $[X,X^*]$ is a multiple of $\alpha$. 
+
+Now taking $H = [X,X^*]$ yields 
+\begin{align*}
+\langle[X,X^*],[X,X^*]\rangle &= \langle\alpha,[X,X^*]\rangle \\& = \langle X^*,X^*\rangle
+\end{align*}
+whence it follows that $\langle\alpha,[X,X^*]\rangle$ is real and positive. 
+
+\qed
+
+Now we set $H = [X,X^*]$, and define $H_\alpha = \frac{2}{\langle\alpha,H\rangle}H$, $X_\alpha = \sqrt{\frac{2}{\langle\alpha,H\rangle}}X$, $Y_\alpha = \sqrt{\frac{2}{\langle\alpha,H\rangle}}$, and show that these work. 
+
+\qed
+
+\underline{Remark:} Since $H_\alpha$ is a multiple of $\alpha$, we see that $H_\alpha = \frac{2}{\langle\alpha,\alpha\rangle}\alpha$, called the \underline{co-root} of $\alpha$. We write
+\[
+\ms{S}^\alpha = \operatorname{Span}\langle X_\alpha,Y_\alpha,H_\alpha\rangle
+\]
+
+This acts on $\g$ via the adjoint representation. 
+
+\lem
+
+If $\alpha,c\alpha\in R$ and $|c|>1$, then $c = \pm2$.
+
+\proof
+
+If $\alpha\in R$ and $X\in\g_{c\alpha}$ is non-zero, then 
+\begin{align*}
+[H_\alpha,X] & = \langle c\alpha, H_\alpha\rangle X \\
+& = \bar{c}\langle \alpha,H_\alpha\rangle X\\&=2\bar{c}X 
+\end{align*}
+
+So from our earlier results on representations of $\mk{s}l_2(\C)$, $2\bar{c}$ has to be an integer, so $\bar{c}$ is an integer multiple of $\frac12$. 
+
+Similarly, reversing the roles of $\alpha,c\alpha$ in the above argument yields that $\frac{1}{c}$ is also a half-integer. This can only happen if $c=\pm2$. 
+
+\qed
+
+\lem
+
+Let $\alpha\in R$ such that if $|c|<1$ then $c\alpha\not\in R$. 
+
+Let $V^\alpha$ be the subspace spanned by 
+\[
+\{H_\alpha\} \cup \{\g_\beta \mid \beta\text{ is a multiple of }\alpha 
+\]
+
+Then $V^\alpha = \ms{S}^\alpha$
+
+\proof
+
+\claim
+
+First, $V^\alpha$ is a subalgebra of $\g$. 
+
+\proof
+
+
+\begin{enumerate}
+
+\item Suppose that $\beta\in R$ is a multiple of $\alpha$, and $X \in \g_\alpha, Y \in \g_{\beta}$. Then for all $H \in \h$, we have
+\begin{align*}
+\langle[X,Y],H\rangle & = \langle\beta,H\rangle\langle Y, X^*\rangle
+\end{align*}
+So (cf earlier argument!), 
+\[
+\langle [X,Y]\rangle^\perp = \langle\beta\rangle^\perp
+\]
+in $\h$, and so $[X,Y]$ is a multiple of $\beta$ and so is a multiple of $\alpha$. 
+
+
+\item If $X\in\g_\beta$, then 
+\[
+[H_\alpha,X] = \langle\alpha,H_\alpha\rangle X \in \g_\beta
+\]
+
+\item $[\g_{\beta_1},\g_{\beta_2}] \subseteq \g_{\beta_1 + \beta_2}$, and $\beta_1 + \beta_2$ is a multiple of $\alpha$ 
+
+\end{enumerate}
+
+Now consider the adjoint action of $\ms{S}^\alpha$ on $V^\alpha$. 
+
+We have $\langle\alpha,H_\alpha \rangle = 2$, and $\beta\in \{\pm\alpha,\pm2\alpha\}$
+
+So the only possible eigenvalues for $\ad_{H_\alpha}$ acting on $V^\alpha$ are $0, \pm1,\pm2,\pm4$
+
+
+Plainly, $\ms{S}^\alpha\subseteq V^\alpha$. Consider the orthogonal complement $U^\alpha$ of $\ms{S}^\alpha$ in $V^\alpha$. Show that $U^\alpha$ is $\ms{S}^\alpha$-invariant (use the fact that $X \in \ms{S}^\alpha $implies $X^*\in\ms{S}^\alpha$). 
+
+Now if $U_\alpha\neq0$, then our earlier results on the representations of $\ms{s}l_2(\C)$ imply there exists $X \in U^\alpha$ with $X\neq0$ and such that $\ad_{H_\alpha}(X) = [H_\alpha,X] = 0$. 
+
+This is a contradiction since the only eigenvector of $\ad_{H_\alpha}$ in $V^\alpha$ with eigenvalue zero is $H_\alpha$, which is orthogonal to $U^\alpha$. 
+
+Hence $V^\alpha = \ms{S}^\alpha$. 
+
+\qed
+
+The upshot of this is that we have shown the subspace of $\g$ spanned by $\g_\alpha,\g_{-\alpha}$ and $[\g_\alpha,\g_{-\alpha}]$ is isomorphic to $\mk{s} l_2(\C)$ 
+
+
+The following result is now immediate: 
+
+\thm
+\,
+\begin{enumerate}
+
+\item If $\alpha\in R$, then the only multiples of $\alpha$ that lie in $R$ are $\pm\alpha$. 
+
+\item Each root space $\g_\alpha$ has dimension 1. 
+
+\end{enumerate}
+
+\qed
+
+\prop
+
+If $\alpha,\beta\in R$, then
+\[
+2\frac{\langle\alpha,\beta\rangle}{\langle\alpha,\alpha\rangle} = \langle\beta,H_\alpha\rangle
+\]
+is an integer. 
+
+\proof
+
+If $X$ is a root vector associaed to $\beta$, then by definition we have
+\[
+[H_\alpha,X]=\langle\beta,H_\alpha\rangle X
+\]
+and now the result follows, since every eigenvalue of $H_\alpha$ is an integer (see earlier results about representations of $\mk{s}l_2(\C)$)
+
+\qed
+
+\thm
+
+If $\alpha,\beta\in R$, then so is 
+
+\[
+\beta - 2\frac{\langle\alpha,\beta\rangle}{\langle\alpha,\alpha\beta}\alpha
+\]
+
+\proof
+
+Consider the linear maps 
+\[
+s_\alpha:\h\to\h
+\]
+defined by $s_\alpha(H) = H - 2\frac{\langle\alpha,H\rangle}{\langle\alpha,\alpha\rangle}\alpha$
+
+\claim
+
+The map $s_\alpha$ restricts to a linear map $i\mk{t}\to i\mk{t}$.
+
+\proof We know that the roots live in $i\mk{t}$ and $\langle -,-\rangle$ is real on $\mk{t}$. So if $H \in i\mk{t}$, then $s_\alpha(H)\in\mk{t}$.
+
+\qed
+
+Next, notice that $\h = \langle\alpha\rangle\oplus\langle\alpha\rangle^\perp$, and so $s_\alpha(\alpha)=-\alpha$ while $s_\alpha(H) = H$ if $H \in \langle\alpha\rangle^\perp$.
+
+So we can see that $s_\alpha$ is the reflection in the hyperplane in $i\mk{t}$ orthogonal to $\alpha$. 
+
+In particular, $s_\alpha$ is an orthogonal linear transformation. 
+
+We want to show that $s_\alpha(\beta)\in R$. We do this by considering an associated root vector.
+
+Consider the linear operator $S_\alpha:\g\to\g$ defined by 
+\[
+S_\alpha = e^{\ad_{X_\alpha}}e^{-\ad_{Y_\alpha}}e^{\ad_{X_\alpha}}
+\]
+
+Now if $H \in\h$, then 
+\[
+[H,X_\alpha] = \langle\alpha,H\rangle X_\alpha
+\]
+\[
+[H,Y_\alpha] = \langle\alpha,H\rangle Y_\alpha
+\]
+
+So if $\langle\alpha,H\rangle=0$, then $\ad_H$ commutes with both $\ad_{X_\alpha},\ad_{Y_\alpha}$
+
+This in turn implies that $S_\alpha\ad_H S_\alpha^{-1} = \ad_H$ whenever $\langle\alpha,H\rangle=0$. 
+
+Also, recall (basic facts about representations of $\mk{s}l_2(\C)$) then we have
+\[
+S_\alpha\ad_H S_\alpha^{-1} = -\ad_{H_\alpha}
+\]
+
+Putting all of this together gives $S_\alpha\ad_HS_\alpha^{-1} = \ad_{s_\alpha(H)}$ for all $H \in \h$. 
+
+Now suppose that $X$ is a root vector associated to $\beta$, and consider $S_\alpha^{-1}(X)\in\g$. 
+
+\claim
+
+$S_\alpha^{-1}(X)$ is a root vector associated to $s_\alpha(\beta)$. 
+
+\proof
+
+\begin{align*}
+\ad_H(S_\alpha^{-1}(X)) \\&= S_\alpha^{-1}(S_\alpha\ad_HS_\alpha^{-1})(X) \\& = S_\alpha^{-1}\ad_{S_\alpha(H)}(X) \\&=\langle\beta,s_\alpha(H)\beta S_\alpha^{-1}(X)\\&= \langle S_\alpha^{-1}(\beta),H\rangle S_\alpha^{-1}(X) \\
+& = \langle S_\alpha(\beta),H\rangle S_\alpha^{-1}(X)
+\end{align*}
+This completes the proof
+
+\qed
+
+\defn
+
+The \underline{Weyl group} is the subgroup of $\GL(\h)$ generated by $\{s_\alpha\mid\alpha\in R\}$
+
+\section*{Lecture 10 - 2/15/24}
+
+The following theorem summarizes the basic properties of roots we have established so far: 
+
+\thm
+
+Let $R$ be the set of roots of a semi-simple Lie algebra $\g$. The set $R$ is a finite set of nonzero vectors in a real inner product space $E$ and 
+\begin{enumerate}[label=(\alph*)]
+
+\item The set $R$ spans $E$. 
+
+\item If $\alpha\in R$, then $-\alpha\in R$, and these are the only multiples of $\alpha\in R$. 
+
+\item If $\alpha,\beta\in R$, then $S_\alpha(\beta)\in R$, the reflection of $\beta$ across the hyperplane perpendicular to $\alpha$
+
+\item If $\alpha,\beta\in R$, then $2\frac{\langle\alpha,\beta\rangle}{\langle\alpha,\alpha\rangle} \in \Z$
+
+\end{enumerate}
+
+These are the properties of a root system. 
+
+\proof
+
+\qed
+
+\section*{\underline{Root systems}}
+
+\defn
+
+An \underline{abstract root system} $(E,R)$, with $E$ an inner product space, $R$ a finite subset, satisfies the four conclusions of the above theorem.
+
+\defn
+
+Suppose that $(E_1,R_2),(E_2,R_2)$ are root systems, an \underline{isomorphism} $f:R_1\to R_2$ is a linear isomorphism $E_1\to E_2$ (not necessarily an isometry!), such that $f(R_1) = R_2$, and $f(S_\alpha(\beta)) = S_{f(\alpha)}(f(\beta))$ for all $\alpha,\beta\in R_1$
+
+\defn
+
+The \underline{Weyl group} $W = W(R)$ of a root system $(E,R)$ is the group generated by 
+\[
+\{S_\alpha\mid\alpha\in R\}
+\]
+So $W$ is a subgroup of $O(E) \subseteq \GL(E)$, so $W$ permutes the elements of $R$. 
+
+\prop
+
+Suppose that $(E,R)$ is a root system and that $\alpha,\beta\in R$ with $\alpha\neq\pm\beta$. Write $p(\beta,\alpha) = 2\frac{\langle\beta,\alpha\rangle}{\langle\alpha,\alpha\rangle}\in\Z$, the length of the projection of $\beta$ onto $\alpha$. 
+\begin{enumerate}[label=(\alph*)]
+
+\item If $\theta$ is the angle between $\alpha$ and $\beta$, and $\norm{\beta}\geq\norm{\alpha}$ are the only possibilities:
+\[
+\begin{tabular}{c|c|c|c}
+$p(\alpha,\beta)$ & $p(\beta,\alpha)$ & $\theta$ & $\left(\frac{\norm{\beta}}{\norm{\alpha}}\right)^2$\\
+\hline
+0 & 0 & $\frac{\pi}{2}$ & undetermined \\
+\hline
+1&1&$\frac{\pi}{3}$ & 1\\
+\hline
+-1&-1&$\frac{2\pi}{3}$&1 \\
+\hline
+1&2&$\frac{\pi}{4}$&2\\
+\hline
+-1&-2&$\frac{3\pi}{4}$&2 \\
+\hline
+1&3&$\frac{\pi}{6}$&3 \\
+\hline
+-1&-3&$\frac{5\pi}{6}$&3\\
+\end{tabular}
+\]
+
+\item If $\langle\alpha,\beta\rangle>0$, then $\alpha-\beta\in R$. If $\langle\alpha,\beta\rangle<0$, then $\alpha+\beta\in R$
+
+\end{enumerate}
+
+\proof
+\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Observe that 
+\[
+p(\beta,\alpha) = 2\left(\frac{\norm{\beta}}{\norm{\alpha}}\right)\cos(\theta)
+\]
+and similarly for $p(\alpha,\beta)$, so 
+\[
+p(\alpha,\beta)\cdot p(\beta,\alpha) = 4\cos^2(\theta)
+\]
+and this must be an integer. 
+
+Now $0 \leq 4\cos^2(\theta)\leq4$, and $\cos(\theta) \neq \pm 1$ since $\alpha\neq\pm\beta$. 
+
+The entries in the table correspond to the integer solutions of $xy = n$, $n = 0, 1, 2, 3$. 
+
+\item Notice that the second assertion follows from the fact that replacing $\beta$ by $-\beta$. From the table in $(a)$, it follows that if $\langle\alpha,\beta\rangle>0$, then either $p(\beta,\alpha)=1$, or $p(\alpha,\beta)=1$. 
+
+If $p(\alpha,\beta)=1$, then $S_\beta(\alpha)=\alpha-\beta\in R$. If $p(\beta,\alpha)= 1$, then $S_\alpha(-\beta) = -(\beta\cdot\alpha)\in R$, and so the result follows. 
+
+\end{enumerate}
+
+\subsection*{\underline{Bases and Weyl chambers}}
+
+\defn
+
+Say that $\Delta\subseteq R$ is a \underline{base} of $R$ if 
+\begin{itemize}
+
+\item[(B1)] $\Delta$ is a vector space basis of $E$. 
+
+\item[(B2)] Each $\beta\in R$ can be written in the form 
+\[
+\beta= \sum_{\alpha\in\Delta}k_\alpha\alpha
+\]
+with integers $k_\alpha$ which are either all $\geq0$ or all $\leq0$. Elements of $\Delta$ are called \underline{simple roots}. The expression $\beta = \sum_{\alpha\in\Delta}k_\alpha\alpha$ is unique.
+
+\end{itemize}
+
+Say that $\beta$ is \underline{positive} if all $k_\alpha\geq0$ and $\beta$ is \underline{negative} if all $k_\alpha\leq0$. 
+
+We define the \underline{height} of $\beta$ to be 
+\[
+\sum_{\alpha\in\Delta}k_\alpha
+\]
+
+We may partially order $E$ by writing $\gamma\curlyeqsucc\delta$ only if $\gamma=\delta$ or $\gamma-\delta$ is a sum of simple roots with real nonnegative coefficients. 
+
+We write $R^+$ and $R^-$ for the sets of positive and negative roots, respectively. 
+
+\prop
+
+If $\alpha,\beta\in\Delta$ with $\alpha\neq\beta$, then 
+\[
+\langle\alpha,\beta\rangle<0
+\]
+\proof
+
+Suppose $\langle\alpha,\beta\rangle>0$. Then $\alpha-\beta\in R$, and this is impossible because the expansion of $\alpha-\beta$ in terms of a linear combination of simple roots has both positive and negative coefficients. 
+
+\underline{Notation:}
+
+Suppose that $(E,R)$ is a root system. 
+\begin{enumerate}[label=(\alph*)]
+
+\item For any $\gamma\in E$, $V_\gamma \eqdef \{x\in E \mid \langle x, \gamma \rangle = 0 \}$
+
+\item We say that $\gamma$ is \underline{regular} if $\gamma\not\in\bigcup_{\alpha\in R}V_\alpha$ (show that regular elements exist as an exercise. A good argument will also show that even if $R$ were countably infinite, regular elements would still exist).
+
+\item If $\gamma$ is regular, set 
+\[
+R^+(\gamma) \eqdef\{\alpha\in R \mid \langle\alpha,\gamma\rangle>0\}
+\]
+\[
+R^-(\gamma)\eqdef\{\alpha\in R \mid \langle\alpha,\gamma\rangle<0\}
+\]
+
+We have $R = R^+(\gamma) \cup R^-(\gamma)$ because $\gamma$ is regular. 
+
+\end{enumerate}
+
+Say that $\alpha\in R$ is \underline{decomposable} if $\alpha = \alpha_1 + \alpha_2$, with $\alpha_1,\alpha_2 \in R^+$. 
+
+\lem
+
+Suppose that $V_\lambda$ is a hyperplane in $E$ and $\{\lambda_1,\dots,\lambda_r\}$ is a subset of $E$, all of whose elements lie strictly on the same side of $V_\lambda$ (e.g. $\langle\lambda,\lambda_i\rangle < 0$ for all $i$, or strictly greater, as long as the signs are the same)
+
+Suppose also that the elements in the set form pairwise obtuse angles (i.e. $\langle\lambda_i,\lambda_j\rangle\leq0$ for $i\neq j$). Then $\{\lambda_1,\dots,\lambda_r\}$ are linearly independent. 
+
+\proof
+
+Note that all the $\langle\lambda_i,\lambda\rangle$ have the same sign. 
+
+Suppose that 
+\[
+\sum_i r_i\lambda_i = \sum_j s_j\lambda_j = \mu
+\]
+say with $r_i,s_j>0$ and $i, j$ running through disjoint subsets of $\{1, \dots, n\}$. 
+
+Then 
+\[
+\langle\mu,\mu\rangle = \sum_{i,j} r_is_j\langle\lambda_i,\lambda_j\rangle \leq 0
+\]
+Hence $\mu = 0$, hence
+\[
+0=\langle\mu,\lambda\rangle = \sum_ir_i\langle\lambda,\lambda_i\rangle
+\]
+and so each $r_i = 0$, and similarly each $s_j = 0$.
+
+\underline{Exercise:}
+
+Show that if $\mc{B}$ is any basis of $E$, then there exists $\gamma\in E$ such that $\langle\gamma,e\rangle > 0$ for all $e\in\mc{B}$
+
+\thm
+
+Suppose that $\gamma\in E$ is regular. Then the set $\Delta(\gamma)$ of all indecomposable roots of $R^+(\gamma)$ is a base for $R$. Moreover, any base for $R$ arises in this way. 
+
+\proof
+\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item We show that each $\alpha\in R^+(\gamma)$ is a nonnegative integral linear combination of elements of $\Delta(\gamma)$. Suppose that this is false. Then there is an $\alpha\in R^+(\gamma)$ that does not satisfy this property, and that $\langle\gamma,\alpha\rangle$ is minimal. Then $\alpha\not\in\Delta(\gamma)$, and so we may write: 
+\[
+\alpha = \alpha_1 + \alpha_2
+\]
+with $\alpha_1,\alpha_2 \in R^+(\gamma)$. Hence 
+\[
+\langle\alpha,\gamma\rangle = \langle\alpha_1,\gamma\rangle + \langle\alpha_2,\gamma\rangle
+\]
+Each $\langle\alpha_i,\gamma\rangle>0$, and so $\langle\alpha_i,\gamma\rangle<\langle\alpha,\gamma\rangle$. Hence by minimality we have that $\alpha_1 + \alpha_2$ are positive, and therefore so is $\alpha$. 
+
+\end{enumerate}
+
+\section*{Lecture 11, 2/20/24}
+
+We now prove (b). 
+
+It now follows that $\Delta(\gamma)$ spans $E$. To show linear independence, it suffices to show that $\langle\alpha,\beta\rangle\leq0$ for all distinct $\alpha,\beta\in\Delta(\gamma)$. 
+
+Suppose not. Then for some distinct $\alpha,\beta\in\Delta(\gamma)$ we have $\langle\alpha,\beta\rangle>0$. So $\alpha-\beta\in R$. Hence either $\alpha-\beta\in R^+(\gamma)$ or $\beta-\alpha\in R^+(\gamma)$. If $\alpha-\beta\in R^+(\gamma)$, then since $\alpha = \beta + (\alpha-\beta)$, $\alpha$ is decomposable, a contradiction, and similarly if $\beta-\alpha\in R^+(\gamma)$. 
+
+Now, suppose that $\Delta$ is a base. Choose $\gamma\in E$ with $\langle\gamma,\alpha\rangle>0$ for all $\alpha\in\Delta$ (see earlier exercise). Then $\gamma$ is regular, because $\gamma$ is not in the hyperplane orthogonal to any of these roots. 
+
+\claim
+
+$\Delta=\Delta(\gamma)$
+
+\proof
+\,
+
+It follows from property B2 of a base (on page 35) that $R^+\leq R^+(\gamma)$, so $-R^+\leq-R^+(\gamma)$. 
+
+Hence $R^+(\gamma) = R^+$. 
+
+Since $\Delta$ is a base every element of $R^+(\gamma)$ is a positive integral combination of elements of $\Delta$, so 
+\[
+\Delta = \{\text{indecomposable elements}\} = \Delta(\gamma)
+\]
+
+\qed
+
+\prop 
+\,
+\begin{enumerate}
+
+\item Suppose that $\alpha,\beta\in\Delta$ are distinct. Then $\langle\alpha,\beta\rangle\leq0$, and $\alpha-\beta\not\in R$. 
+
+\item Suppose that $\alpha\in R^+(\gamma)$ and $\beta\not\in\Delta$. Then $\beta-\alpha\in R^+$ for some $\alpha\in\Delta$
+
+\item Each $\beta\in R^+$ may be written 
+\[
+\beta = \alpha_1 + \cdots + \alpha_n
+\]
+with $\alpha_i\in\Delta$ not necessarily distinct, such that each partial sum $\alpha_1 + \cdots + \alpha_r \in R^+$
+
+\item If $\alpha$ is a simple root, then $S_\alpha$ permutes $R^+\setminus\{\alpha\}$. So if $\delta = \frac12\sum_{\alpha\in R^+}\alpha$,then $S_\alpha(\delta) = \delta-\alpha$
+
+\end{enumerate}
+
+\proof
+\,
+\begin{enumerate}
+
+\item If $\alpha-\beta\in R$, then this contradicts property B2 of a base. Now $\langle\alpha,\beta\rangle\leq0$ follows from the table in the last lecture. 
+
+\item We know $\Delta=\Delta(\gamma_1)$ for some $\gamma_1\in E$. Now $\Delta\cup\{\beta\}$ lie on the same side of $V_{\gamma_1}$ and $\Delta$ spans $E$. Hence there exists $\alpha\in\Delta$ such that $\langle\alpha,\beta\rangle>0$, and so $\beta-\alpha\in R$. Now since $\beta \in R^+$, we have
+\[
+\beta = \sum_{\gamma\in\Delta}k_\gamma\gamma
+\]
+
+with all $k_\gamma\geq0$. Since $\beta\not\in\Delta$, we have $k_\gamma\geq0$ for at least two values of $\gamma$, and so at least 1 such $\gamma$ is not equal to $\alpha$.
+
+The coefficient of this $\gamma$ in $\beta-\alpha$ is equal to $k_\gamma>0$, so $\beta-\alpha\in R^+$. 
+
+\item Follows from (b)
+
+\item Suppose that $\beta\in R^+\setminus\{\alpha\}$, with 
+\[
+\beta = \sum_{\gamma\in\Delta}k_\gamma\gamma
+\]
+, say. Then there exists $\gamma\neq\alpha$ such that $k_\gamma>0$. 
+Now observe that the coefficient of this $\gamma$ in 
+\[
+S_\alpha(\beta) = \beta - 2\frac{\langle\beta,\alpha\rangle}{\langle\alpha,\alpha\rangle}\alpha
+\]
+is $k_\gamma$, and so $S_\alpha(\beta)\in R^+$.
+
+\end{enumerate}
+
+\qed
+
+\defn 
+
+Suppose that $(E,R)$ is a root system. The connected components of
+\[
+E\setminus \left(\bigcup_{\alpha\in R}V_\alpha\right)
+\]
+are called the \underline{(open) Weyl chambers of $E$}
+
+So each regular element $\gamma$ of $E$ belongs to exactly one Weyl chamber, $C(\gamma)$, say. 
+
+We have $C(\gamma_1) = C(\gamma_2)$ if and only if $\gamma_1,\gamma_2$ lie on the same side of each hyperplane $V_\alpha$. 
+
+So in this case, $R^+(\gamma_1) = R^+(\gamma_2)$, and if $R^+(\gamma_1) = R^+(\gamma_2)$, then $\Delta(\gamma_1) = \Delta(\gamma_2)$. So there is a natural bijection between Weyl chambers and bases. 
+
+We write $C(\Delta)$ for $C(\gamma)$ if $\Delta = \Delta(\gamma)$, and call this the 
+
+\underline{fundamental Weyl chamber relative to $\Delta$}. 
+
+\underline{The goal:} Show that the Weyl group W permutes the bases of $R$ simply transitively, and is generated by the $S_\alpha$ for $\alpha\in\Delta$, where $\Delta$ is any base. 
+
+Here is a lemma about reflections:
+
+\lem
+
+Suppose that $\Phi$ is any finite set of vectors with spans $E$, and that $S_\alpha(\Phi) = \Phi$ for all $\alpha\in\Phi$. 
+
+Suppose that $\sigma\in\GL(E)$ satisfies: 
+
+\begin{itemize}
+
+\item $\sigma(\Phi)=\Phi$
+
+\item $\sigma$ fixes some hyperplane $V$ of $E$ pointwise
+
+\item $\sigma(\alpha)=-\alpha$ for some $\alpha\in \Phi$. 
+
+\end{itemize}
+
+Then $\sigma=S_\alpha$
+
+\proof
+
+Observe that 
+\[
+E = V\oplus\langle\alpha\rangle = V_\alpha\oplus\langle\alpha\rangle
+\]
+Hence $\sigma:E/\langle\alpha\rangle\to V$ and $S_\alpha E/\langle\alpha\rangle\to V_\alpha$ are isomorphisms. Set $\tau = \sigma\circ S_\alpha$. 
+
+Then $\tau$ fixes both $E/\langle\alpha\rangle$ and $\langle\alpha\rangle$ poitnwise, and so $(\tau - 1)E \leq \langle\alpha\rangle$ and $(\tau-1)^2E = 0$. 
+
+Next, observe that $\tau$ permutes $\Phi$ and so some $\tau^n$ fixes each element of $\Phi$ aned so fixes $E$ because $\Phi$ spans $E$. Hence $(\tau^n-1)E = 0$. 
+
+So the minimum power of $\tau$ divides both $(X-1)^2$ and $X^n - 1$, and so $\tau = 1$ ????
+
+\qed
+
+Recall that earlier we defind $p(\beta,\alpha) = 2\frac{\langle\beta,\alpha\rangle}{\langle\alpha,\alpha\rangle}\in\Z$. 
+
+\prop
+
+Suppose $(E,R)$ is a root system. 
+
+\begin{enumerate}[label=(\alph*)]
+
+\item The group $W$ permutes $R$ faithfully, i.e. if $\sigma\in W$ and $\sigma\neq\Id$, then for some $\alpha \in R$, $\sigma(\alpha)\neq\alpha$. Hence $W$ is finite
+
+\item Suppose that $\sigma\in\GL(E)$ satisfies $\sigma(R) = R$. Then 
+\[
+\sigma S_\alpha\sigma^{-1} = S_{\sigma(\alpha)}
+\]
+for all $\alpha\in R$, and furthermore 
+\[
+p(\sigma(\beta),\sigma(\alpha)) = p(\sigma,\alpha)
+\]
+for all $\alpha,\beta\in R$
+
+\item Suppose that $\sigma\in\GL(E)$. Then $\sigma\in\Aut(R)$ if and only if $\sigma(R) = R$. 
+
+\item Suppose that $f:(E,R)\to(E_1,R_1)$ is an isomorphism of root systems. Then
+\[
+S_{f(\alpha)}(f(\beta))  = f(S_{\alpha}(\beta))
+\]
+for all $\alpha,\beta\in R$. Also, $f$ induces an isomorphism $W(R)\to W(R_1)$ given by 
+\[
+\sigma\mapsto f\sigma f^{-1}
+\]
+
+\end{enumerate}
+
+\proof\,
+
+\section*{Lecture 12, 2/22/24}
+
+
+
+\underline{Recall:} If $\alpha,\beta\in R$, then we define $p(\alpha,\beta) = 2\frac{\langle\beta,\alpha\rangle}{\langle\alpha,\alpha\rangle}$
+
+
+\defn
+
+An \underline{isomorphism $f:(E_1,R_1)\to(E_2,R_2)$ between two root systems}
+is a vector space isomorphism $f:E_1\to E_2$, (not necessarily an isometry!) such that $f(R_1) = R_2$, and 
+\[
+p(f(\alpha),f(\beta)) = p(\alpha,\beta)
+\]
+for all $\alpha,\beta\in R_1$
+
+\prop
+
+Suppose $(E,R)$ is a root system. 
+
+\begin{enumerate}[label=(\alph*)]
+
+\item The group $W$ permutes $R$ faithfully, i.e. if $\sigma\in W$ and $\sigma\neq\Id$, then for some $\alpha \in R$, $\sigma(\alpha)\neq\alpha$. Hence $W$ is finite
+
+\item Suppose that $\sigma\in\GL(E)$ satisfies $\sigma(R) = R$. Then 
+\[
+\sigma S_\alpha\sigma^{-1} = S_{\sigma(\alpha)}
+\]
+for all $\alpha\in R$, and furthermore 
+\[
+p(\sigma(\beta),\sigma(\alpha)) = p(\sigma,\alpha)
+\]
+for all $\alpha,\beta\in R$
+
+\item Suppose that $\sigma\in\GL(E)$. Then $\sigma\in\Aut(R)$ if and only if $\sigma(R) = R$. 
+
+\item Suppose that $f:(E,R)\to(E_1,R_1)$ is an isomorphism of root systems. Then
+\[
+S_{f(\alpha)}(f(\beta))  = f(S_{\alpha}(\beta))
+\]
+for all $\alpha,\beta\in R$. Also, $f$ induces an isomorphism $W(R)\to W(R_1)$ given by 
+\[
+\sigma\mapsto f\sigma f^{-1}
+\]
+
+\end{enumerate}
+
+\proof
+\,
+\begin{enumerate}[label=(\alph*)]
+
+\item Immediate, since $R$ is a finite set, and $R$ spans $E$.
+
+\item Suppose $\alpha,\beta\in R$. First observe that 
+\begin{align*}
+\sigma S_\alpha \sigma^{-1}(\sigma_\beta) & = \sigma S_\alpha(\beta) \in R
+\end{align*}
+because $S_\alpha(\beta)\in R$. 
+
+Next, note that
+\begin{align*}
+\sigma(S_\alpha(\beta)) & = \sigma(\beta - p(\beta,\alpha)\alpha) \\ & = \sigma(\beta) - p(\beta,\alpha)\sigma(\alpha) \\
+\end{align*}
+
+So we see that $\sigma S_\alpha\sigma^{-1}$
+\begin{enumerate}[label=(\roman*)]
+
+\item Sends $R$ to $R$
+
+\item Fixes the hyperplane $V_{\sigma(\alpha)}$ pointwise
+
+\item Sends $\sigma(\alpha)$ to $-\sigma(\alpha)$
+
+\end{enumerate}
+
+We therefore see that 
+\[
+\sigma S_\alpha \sigma^{-1} = S_{\sigma(\alpha)}
+\]
+
+Finally, observe that 
+\[
+S_{\sigma(\alpha)}(\sigma(\beta)) = \sigma(\beta)-p(\sigma(\beta),\sigma(\alpha))\sigma(\alpha)
+\]
+and now (b) follows from this and the second equation from the top of this page. 
+
+\item Follows immediately from (b)
+
+\item Observe that we have:
+\begin{align*}
+S_{f(\alpha)}(f(\beta)) & = f(\beta) - p(f(\beta),f(\alpha))f(\alpha) \\
+& = f(\beta) - p(\beta,\alpha)f(\alpha) \\
+& = f(S_\alpha(\beta))
+\end{align*}
+
+Now 
+\begin{align*}
+(f\circ S_\alpha\circ f^{-1})(f(\beta)) & = f(S_\alpha(\beta)) \\
+ & = S_{f(\alpha)}(f(\beta)) \in R_1
+\end{align*}
+So we see that $f\circ S_\alpha\circ f^{-1} \in W(R_1)$, and the result follows. 
+
+\end{enumerate}
+
+\qed
+
+\lem
+
+Suppose that $(E,R)$ is a root system with base $\Delta$. 
+\begin{enumerate}[label=(\alph*)]
+
+\item Let $\alpha_1,\dots,\alpha_t \in \Delta$ (not necessarily distinct) and write $S_i$ for $S_{\alpha_i}$. 
+
+Suppose that $S_1, \dots, S_{t-1}(\alpha_t)<0$. Then for some $i$ with $1\leq i\leq t-1$ we have 
+\[
+S_1\cdots S_{i-1}S_{i + 1}\cdots S_{t-1} = S_1\cdots S_t
+\]
+
+\item If $\sigma = S_1\cdots S_t$ is an expression $\sigma\in W$ in terms of simple reflections corresponding to $\alpha_1,\dots,\alpha_t$, with $t$ as small as possible, then $\sigma(\alpha_t)<0$
+
+\end{enumerate}
+
+\proof
+\,
+\begin{enumerate}[label=(\alph*)]
+
+\item Define
+\[
+\beta_i = \begin{cases} S_{i + 1}\cdots S_{t-1}(\alpha_t) & 0 \leq i \leq t - 2\\ \alpha_t & i = t - 1 \\ \end{cases}
+\]
+Then $\beta_0 < 0 $ and $\beta_{t-1}\curlyeqsucc 0$ and so we may choose $j$ minimal such that $\beta_j\curlyeqsucc 0$. 
+
+Then 
+\[
+S_j(\beta_j) = \beta_{j-1} \curlyeqprec 0
+\]
+and this forces $\beta_j=\alpha_j$ because $S_j$ permutes the positive roots not equal to $\alpha_j$. Now if $\sigma\in W$, then 
+\begin{align*}
+S_{\sigma(\alpha)} = \sigma S_\alpha \sigma^{-1}
+\end{align*}
+
+for all $\alpha \in R$. So in particular if we set $\sigma = S_2\cdots S_{j-1}$, then we have 
+\begin{align*}
+S_j & = S_{\alpha_j} \\
+	 & = S_{\sigma(\alpha_1)}\\
+    & = \sigma^{-1}S_1\sigma \\
+\end{align*}
+whence
+\[
+\sigma S_j = S_1\sigma
+\]
+and this implies the result. 
+
+\item
+
+Suppose not. Then $\sigma(\alpha_t)\curlyeqsucc0$. Observe that 
+\[
+S_t(\alpha_t) = -\alpha_t\curlyeqprec0
+\]
+aned so 
+\[
+S_1\cdots S_{t-1}(\alpha_t) = -\sigma(S_t(\alpha_t))\curlyeqprec0
+\]
+
+\end{enumerate}
+
+\qed
+
+\thm
+
+Let $\Delta$ be a base of $R$. 
+
+\begin{enumerate}[label=(\alph*)]
+
+\item If $\gamma\in E$ is regular, then there exists $\sigma\in W$ with 
+\[
+\langle\alpha,\sigma(\gamma)\rangle > 0
+\]
+for all $\alpha\in\Delta$
+
+\item If $\alpha\in R$, then there exists $\sigma\in W$ such that $\sigma(\alpha)\in W$. Hence $W$ permute the roots of $R$ transitively.
+
+\item If $\alpha\in R$, then there exists $\sigma\in W$ such that $\sigma(\alpha)\in\Delta$
+
+\item If $\sigma\in W$ and $\sigma(\Delta)=\Delta$, then $\sigma = 1$
+
+\end{enumerate}
+
+\proof
+Our strategy will be to cheat: set
+\[
+W_1 = \langle S_\alpha \mid \alpha \in \Delta\rangle
+\]
+We prove $(a)$ and $(b)$ for $W_1$, and then deduce that $W_1 = W$
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Write $\delta = \frac12\sum_{\alpha\in R^+}\alpha$. Choose $\sigma\in W_1$ with $\langle\delta,\sigma(\gamma)\rangle$ maximal.  Observe that for all $\alpha\in\Delta$, we have $S_\alpha(\sigma)\in W_1$. Hence
+\begin{align*}
+\langle\delta,\sigma(\gamma)\rangle & \geq \langle \delta, S_\alpha\sigma(\gamma)\rangle\\
+& = \langle S_\alpha\delta, \sigma(\gamma)\rangle\\
+& = \langle\delta-\alpha,\sigma(\gamma)\rangle\\
+& = \langle\delta,\sigma(\gamma)\rangle - \langle \alpha,\sigma(\gamma)\rangle \\
+\end{align*}
+so $\langle\alpha,sigma(\gamma)\rangle \geq0$
+
+Now if $\langle\alpha,\sigma(\gamma)\rangle=0$, then $\gamma \in V_{\sigma(\alpha)}$, a contradiction since $\gamma$ is regular. So we see that $\sigma^{-1}(\Delta)$ is a base with $\langle\gamma,\alpha\rangle>0$ for all $\alpha_i\in\sigma^{-1}(\Delta)$. So we see that $\sigma^{-1}(\Delta) = \Delta(\gamma)$, and now transitivity of $W_1$ on bases follows as every base has the form $\Delta(\gamma)$ for some $\gamma$.
+
+\item From part (a), it suffices to show that each $\alpha \in R$ belongs to some base. Choose $\gamma_1\in V_\alpha\setminus\bigcup_{\beta\in R, \beta\neq\pm\alpha}V_\beta$. Let 
+\[
+2\varepsilon = \min\{|\langle\gamma_1,\beta\rangle|\mid\beta\neq\pm\alpha\}
+\]
+Now choose $\gamma_2$ with 
+\begin{align*}
+0<\langle\gamma_2,\alpha\rangle<\varepsilon, & & |\langle\gamma_2,\beta\rangle| < \varepsilon\,\forall \beta\neq\pm\alpha
+\end{align*}
+(We may do this by choosing some $\gamma_2$ appropriately to satisfy the first inequality, and then adjusting its length to satisfy the others). Now define $\gamma =\gamma_1 + \gamma_2$. Then $0<\langle\gamma,\alpha\rangle<\varepsilon$, $|\langle\gamma,\beta\rangle| > \varepsilon$ for all $\beta\neq\pm\alpha$.
+
+Hence $\alpha$ is an indecomposable element of $R^+(\gamma)$, and so $\alpha\in\Delta(\gamma)$
+
+\item It is enough to show that if $\alpha\in R$, then $S_\alpha \in W_1$. From part (b), there exists $\sigma\in W_1$ such that $\sigma(\alpha)\in\Delta$. Hence $S_{\sigma(\alpha)}\in W_1$. Now observe that 
+\[
+S_{\sigma(\alpha)} = \sigma S_\alpha \sigma^{-1} \in W_1
+\]
+and so $S_\alpha \in W_1$, as required.
+
+\item Suppose that this is false. Write $\sigma$ as a product $S_1\cdots S_t$ of simple reflections in such a way that $t$ is the smallest possible. Now if $\sigma(\Delta) = \Delta$, then $\sigma(\alpha_t)\curlyeqsucc0$, a contradiction of Lemma 8. 
+
+\end{enumerate}
+
+\qed
+
+\section*{Lecture 13, 2/27/24}
+
+\underline{Recall:}
+
+If $R$ is a root system and $\alpha,\beta\in R$, we define
+\[
+p(\alpha,\beta)\eqdef2\frac{\langle\alpha,\beta\rangle}{\langle\alpha,\alpha\rangle}\in\Z
+\]
+
+\defn
+
+The \underline{Cartan matrix} of $R$ (with respect to a base $\Delta$) is the matrix
+\[
+(p(\alpha,\beta))_{\alpha,\beta\in\Delta}
+\]
+Recall: $p(\alpha,\alpha)=2$ and if $\alpha\neq\beta$ then $p(\alpha,\beta)\leq0$. Also $p(\alpha,\beta) \in \{0,-1,-2,-3\}$ and $0\leq p(\alpha,\beta)p(\beta,\alpha) \leq3$. The Cartan matrix determines $R$ up to isomorphism. 
+
+\prop
+
+Suppose that $(E,R)$ and $(E_1,R_1)$ are root systems with bases $\Delta,\Delta_1$, respectively. 
+
+Let $\phi:\Delta\to\Delta_1$ be a bijection such that 
+\[
+p(\phi(\alpha),\phi(\beta)) = p(\alpha,\beta)
+\]
+for all $\alpha,\beta\in\Delta$. Then there is a unique $f:E\to E_1$ which extends $\phi$ and sends $R$ to $R_1$. 
+
+\proof
+
+Define $f$ by extending $\phi$ from $\Delta$ to $E$ by linearity. So if $\alpha,\beta\in\Delta$, then
+\begin{align*}
+S_{\phi(\alpha)}\circ f(\beta) & = S_{\phi(\alpha)}(\phi(\beta)) \\
+& = \phi(\beta) - p(\phi(\beta),\phi(\alpha))\phi(\alpha)
+\end{align*}
+
+and also 
+\begin{align*}
+f\circ S_\alpha(\beta) & = f(\beta- p(\beta,\alpha)\alpha) \\ & = \phi(\beta) - p(\beta,\alpha)\phi(\alpha)
+\end{align*}
+
+so we see $S_{\phi(\alpha)}\circ f = f\circ S_\alpha$ for all $\alpha\in\Delta$. 
+
+So $W_1 = f W f^{-1}$, and this is enough because $R = W(\Delta)$ and $R_1 = W_1(\Delta)$. 
+
+\qed
+
+\defn
+
+A \underline{Coxeter graph} is a finite graph in which each pair of vertices is joined by $0,1,2,$ or $3$ edges. 
+
+If $R$ is a root system with base $\Delta$, then the coxeter graph of $R$ (with respect to $\Delta$) is the graph whose vertices are elements of $\Delta$, with distinct vertices $\alpha,\beta$ being joined by $p(\alpha,\beta)p(\beta,\alpha)$ edges. 
+
+It will suffice to consider \underline{irreducible} root systems. 
+
+\prop
+
+Suppose $E_1, E_2$ are subspaces of $E$, and suppose that $E = E_1 \oplus E_2$. Suppose also that $(E,R)$ is a root system, with $R \subseteq E_1 \cup E_2$. Set $R_i = R \cap E_i$, $i =1,2$. Then
+\begin{enumerate}[label=(\alph*)]
+
+\item The subspaces $E_1, E_2$ are orthogonal. 
+
+\item The set $R_i$ is a root system in $E_i$. 
+
+\end{enumerate}
+
+\proof
+\,
+\begin{enumerate}[label=(\alph*)]
+
+\item Suppose that $\alpha\in R_1$ and $\beta\in R_2$. Then $\alpha-\beta \not\in R_1 \cup R_2$, and so is not a root. Hence $\langle\alpha,\beta\rangle\leq0$. Similarly $\langle\alpha,\beta\rangle\geq0$, and so $\langle\alpha,\beta\rangle=0$. 
+
+Since $R_i$ spans $E_i$, part (a) follows. 
+
+\item Observe eg that if $\alpha \in R_1$, then $S_\alpha$ preserves $E_2$ and therefore also preserves $R$.
+
+\end{enumerate}
+
+\qed
+
+We say that $R$ is the \underline{sum} of $R_1$ and $R_2$. 
+
+\defn
+
+We say that $R$ is irreducible if it cannot be written as a sum in a nontrivial way. 
+
+\prop
+
+A root system $(E,R)$ is irreducible if and only if its Coxeter graph is connected (and non-empty)
+
+\proof
+
+Exercise
+
+\qed
+
+\thm
+
+Every connected, non-empty coxeter graph associated to a root system is isomorphic to one of the following:
+\begin{itemize}
+\item[$A_n$]
+\[
+\dynkin A{}
+\]
+\item[$B_n$]
+\[
+\dynkin B{}
+\]
+\item[$C_n$]
+\[
+\dynkin C{}
+\]
+\item[$D_n$]
+\[
+\dynkin [Coxeter]D{}
+\]
+\item[$G_2$]
+\[
+\dynkin G{2}
+\]
+\item[$F_4$]
+\[
+\dynkin F{4}
+\]
+\item[$E_6$]
+\[
+\dynkin E{6}
+\]
+\item[$E_7$]
+\[
+\dynkin E{7}
+\]
+\item[$E_8$]
+\[
+\dynkin E{8}
+\]
+\end{itemize}
+
+\proof
+
+\qed
+
+The Coxeter graph does not determine the Cartan matrix because it only gives angles between parts of roots in the base without indicating which of the roots is longer. 
+
+In order to determine the Cartan matrix, we need to specfy the ratios of the lengths of the roots. 
+
+So, if $\alpha_r$, say is the shortest root, we label each root $\alpha_i$ in the Coxeter graph with a weight $w_i = \frac{\norm{\alpha_i}^2}{\norm{\alpha_r}^2}$. This labelled Coxeter graph is called a \underline{dynkin diagram}. The Dynkin diagrams for the above are
+
+\begin{itemize}
+\item[$A_n$]
+\[
+\dynkin[labels = {1,1,1,1}] A{}
+\]
+This is $\mk{s} l_{n + 1}$
+\item[$B_n$]
+\[
+\dynkin [labels = {2,2,2,2,1}]B{}
+\]
+This is $\mk{s}o_{2n+1}$
+\item[$C_n$]
+\[
+\dynkin [labels={1,1,1,1,2}]C{}
+\]
+This is $\mk{s}l_{2n}$
+\item[$D_n$]
+\[
+\dynkin [labels={1,1,1,1}]D{}
+\]
+This is $\mk{s}o_{2n}$. The rest are exceptional Lie algebras.
+\item[$G_2$]
+\[
+\dynkin [labels={1,3}]G{2}
+\]
+\item[$F_4$]
+\[
+\dynkin [labels={1,1,2,2}]F{4}
+\]
+\item[$E_6$]
+\[
+\dynkin [labels={1,1,1,1,1,1}]E{6}
+\]
+\item[$E_7$]
+\[
+\dynkin [labels={1,1,1,1,1,1,1}]E{7}
+\]
+\item[$E_8$]
+\[
+\dynkin [labels={1,1,1,1,1,1,1,1}] E{8}
+\]
+\end{itemize}
+
+Here is how to recover the Cartan matrix from the Dynkin diagram: 
+
+If $\alpha = \beta$ then $p(\alpha,\beta)=2$
+
+If $\alpha\neq\beta$ and if $\alpha,\beta$ are not joined by an edge, then $p(\alpha,\beta)=0$
+
+If $\alpha\neq\beta$ and if $\alpha,\beta$ are joined by at least one edge, and if the coefficient of $\alpha$ is less than the coefficient of $\beta$, then $p(\alpha,\beta)=-1$.
+
+If $\alpha\neq\beta$ and if $\alpha,\beta$ are joined by at least $i$ edges ($1\leq i\leq3$) and if the coefficient of $\alpha$ is greater than or equal to that of $\beta$, then $p(\alpha,\beta)=-i$
+
+\section*{The classification theorem}
+
+Suppose that $\g$ is a finite dimensional semisimple Lie algebra with Cartan subalgebra $\h$. Recall that we showed 
+\[
+\g = \h\oplus\left(\bigoplus_{\alpha\in R}\g_\alpha\right)
+\]
+
+We also showed that there exists $H_\alpha\in\h$, $X_\alpha\in\g_\alpha$, $Y_\alpha\in\g_{-\alpha}$ such that
+\[
+[H_\alpha,X_\alpha] = 2X_\alpha,\, [H_\alpha,Y_\alpha] = -2Y_\alpha
+\]
+Let $\Delta = \{\alpha_1,\dots,\alpha_n\}$ be a base of $R$. To ease notation, write $H_i$ instead of $H_{\alpha_i}$, etc. 
+
+Also, set $p(i,j) = p(\alpha_i,\alpha_j)$. 
+
+\thm
+
+The algebra $\g$ is generated by the elements 
+\[
+\{X_i, Y_i, H_i \mid 1\leq i \leq n\}
+\]
+satisfying the following relations:
+\begin{itemize}
+
+\item[$(S1)$] $[H_i,H_j] = 0$, $1\leq i, j \leq n$
+
+\item[$(S2)$] $[X_i,Y_i] = H_i, [X_i,Y_j] = 0$ if $i\neq j$
+
+\item[$(S3)$] $[H_i,X_j] = p(j,i)X_j$, $[H_i,Y_j] = -p(i,j)Y_i$
+
+\item[$(S_{ij}^+)$] $(\ad_{X_i})^{p(j,i) + 1}(X_j) = 0$ if $i \neq j$
+
+\item[$(S_{ij}^-)$] $(\ad_{Y_i})^{-p(j,i) + 1}(Y_j) = 0$ if $i \neq j$
+
+\end{itemize}
+
+\proof
+\,
+
+\begin{itemize}
+
+\item[$(S1)$] Suppose that $\alpha \in R^+$ and then recall that we may write $\alpha = \alpha_{i_1} + \cdots + \alpha_{i_k}$ in such a way that all th epartial sums $\alpha_{i_1} + \cdots + \alpha_{i_h}$, $h < k$, are in $R^+$. Then the elements 
+\[
+[X_{i_k},[X_{i_{k-1}},[\dots,[X_{i_2},X_{i_1}]\dots]]
+\]
+is a nonzero element of $\g_\alpha$
+
+\item[$(S2)$]
+
+Observe that if $i\neq j$, then $[X_i,Y_j] \in \g_{\alpha_i-\alpha_j}$ and $\alpha_i-\alpha_j \in R^+$
+
+\item[$(S3)$]
+
+``It just works, look at the Cartan matrix" - Bisi
+
+\end{itemize}
+
+\section*{Lecture 14, 2/29/24}
+
+We finish the proof: 
+
+\begin{itemize}
+
+\item[$(S_{ij}^+)$] Observe that the weight of $(\ad_{X_i})^{-p(i,j) + 1}(X_j)$ is equal to $-p(j,i)\alpha_i + \alpha_i + \alpha_j = \alpha_j - p(j,i)\alpha_i + \alpha_i = S_j(\alpha_i-\alpha_j)$. $\alpha_i-\alpha_j\not\in R$, so $\g_{\alpha_i-\alpha_j} = 0$
+
+\item[$(S_{ij}^-)$] Similarly.
+
+\end{itemize}
+
+\qed
+
+\thm[Serre]
+
+Suppose that $R$ is a root system with base $\Delta = \{\alpha_1,\dots,\alpha_n\}$. 
+
+Let $\g$ be the Lie algebra generated by the elements
+\[
+\{X_i, Y_i, H_i \mid 1\leq i \leq n\}
+\]
+satisfying the relations listed in the previous theorem. Then $\g$ is a finite-dimensional semisimple Lie algebra, with Cartan subalgebra spanned by the $H_i$, with corresponding root system equal to $R$. 
+
+\proof
+
+Omitted - one can look in Humphries, for example.
+
+\qed
+
+\subsection*{\underline{Abstract Theory of Weights}}
+
+Let $\g$ be a finite dimensional semisimple Lie algebra, and $\h$ be a Cartan subalgebra. Let $\Delta = \{\alpha_1,\dots,\alpha_n\}$ be a base of the root system $R$ of $\g$. Write $H_i$ for $H_{\alpha_i}$, etc. 
+
+\defn
+
+An \underline{abstract (or integral) weight} is a linear function $\lambda:\g\to\C$ such that $\lambda(H_i) \in \Z$ for all $i$. Say that $\lambda$ is \underline{dominant} if $\lambda(H_i)\geq0$ for all $i$. The \underline{fundamental weights} $\lambda_i$ are those defined by 
+\[
+\lambda_i(H_j) = \delta_{ij}
+\]
+i.e. given by the dual basis of $H_i$. 
+
+\exm
+
+If $\g = \mk{s}l_2(\C)$, then the only fundamental weight is $\lambda_1 = \frac{\alpha}{2}$
+\[
+\lambda_1(H_1) = \frac12\alpha(H_\alpha) = \frac22=1
+\]
+
+Let $\wedge^+$ denote the set of dominant weights. Every dominant weight $\lambda$ may be written 
+\[
+\lambda = \sum_i n_i\lambda_i
+\]
+with $\Z\ni n_i \geq 0$. Say that $\lambda$ is \underline{strongly dominant} if $n_i > 0$. 
+
+\subsection*{\underline{The universal enveloping algebra of a Lie algebra}}
+
+Recall that there is a functor 
+\[
+\ms{L}:\{\text{Associative Algebras}\} \to \{\text{Lie Algebras}\}
+\]
+
+sending $A$ to $\ms{L}(A)$. If $a , b \in A$, then $[a,b] = ab - ba$. 
+
+Suppose that $\g$ is a Lie algebra. 
+
+\defn
+
+A \underline{universal enveloping algebra of $\g$} is any pair $(U, \iota)$ consisting of an associative algebra $U$ and a Lie algebra homomorphism $\iota:\g\to\ms{L}(U)$, satisfying the following universal property:
+
+If $A$ is an associative algebra and $\pi:\g\to\ms{L}(A)$ is a Lie algebra homomorphism, then there exists a unique $\tilde{\pi}:U\to A$ of associative algebras such that the following square commutes
+\[
+\begin{tikzcd}
+\g \ar[r, "\iota"] \ar[dr, "\pi"']& U \ar[d, dotted, "\exists!\tilde{\pi}"]\\
+& A
+\end{tikzcd}
+\]
+$\Hom(\g, \ms{L}(A)) = \Hom(U(\g), A)$, so $U$ is a left adjoint to $\ms{L}$
+
+Suppose that $(U_1, \iota_1)$ is another universal enveloping algebra for $\g$. We have
+\[
+\begin{tikzcd}
+\g \ar[r, "\iota"] \ar[dr, "\iota_1"'] & U \ar[d, dotted, "\exists!\tilde{\iota_1}"] \\
+& U_1
+\end{tikzcd}
+\]
+Similarly we have $\tilde{\iota}:U_1\to U$. Check that $\tilde{\iota}\circ\tilde{\iota_1} = \Id$, $\tilde{\iota_1}\circ\tilde{\iota} = \Id$
+
+\thm
+
+If $\g = \g_1\oplus\g_2$, then $U(\g) = U(\g_1)\otimes U(\g_2)$ . 
+
+\proof
+
+Set $U = U(\g)$, $U_i = U(\g_i)$, $i = 1, 2$. Define:
+\begin{align*}
+f:\g&\to U_1\otimes U_2 \\
+x & \mapsto \iota_1(x_1)\otimes 1 + 1\otimes\iota_2(x_2)
+\end{align*}
+Check that $f$ is a Lie algebra homomorphism of associative algebras, so induces a homomorphism $\tilde{f}:U\to U_1\otimes U_2$ of associative algebras. 
+
+Next consider the homomorphisms
+\[
+\phi_i: \g_i \into \g \to U
+\]
+these induce homomorphisms $\tphi_i:U_i\to U$. Now define
+\begin{align*}
+\phi: U_1\otimes U_2 & \to U \\
+x_1\otimes x_2 & \mapsto \tphi_1(x_1)\cdot\tphi_2(x_2)
+\end{align*}
+Check that $\phi\circ\tilde{f} = \Id$ and $\tilde{f}\circ\phi = \Id$
+
+Alternatively, this is just because $U$ is left adjoint to $\ms{L}$, and so preserves colimits, and so preserves coproducts. 
+
+\qed
+
+\thm
+
+If $(U, \iota)$ is a universal enveloping algebra of $\g$ then the correspondence $\pi\mapsto\tilde{\pi}$ induces a bijection between  representations of $\g$ and left $U$-modules. 
+
+\proof
+
+If $\pi:\g\to\g l(V)$ is a representation of $\g$ in a vector space $V$, then $V$ may be viewed as being a left $U$ module via $u\cdot v = \tilde{\pi}(u)v$ for all $u \in U, v \in V$. 
+
+Suppose conversely that $V$ is a left $U$-module. Then $V$ is a $\C$-vector space and defining
+\[
+\pi(X)u = (\iota(X))v
+\]
+$(v\in V, X \in \g)$ yields a representation of $\g$. These two constructions are inverse to each other because $\tilde{\pi} \circ \iota = \pi$
+
+\qed
+
+\underline{Remark:} The map $[-1]:\g\to\g$ (multiplication by -1) is an involution on $\g$, so induces an involution $u \mapsto u'$ on $U$ such that $\iota(X)' = -\iota(X)$. This enables us to view left $U$ modules as right $U$ modules, via 
+
+\[
+v\cdot u = u'\cdot v
+\]
+
+To show the universal enveloping algebra exists, consider the tensor algebra 
+\[
+T(\g) = \bigoplus_{k=0}^\oo \g^{\otimes k}
+\]
+together with the natural map $\iota:\g\to T(\g)$. Notice that $T(\g)$ is generated by 1 and $\iota(\g)$. (If $A$ is any associative algebra) then any linear map $\g\to A$ extends uniquely to a homomorphism $T(\g)\to A$ of associative algebras). 
+
+Let $J$ be the two-sided ideal in $T(\g)$ generated by all elements
+\[
+X\otimes Y - Y \otimes X - [X,Y]
+\]
+with $X, Y \in \g$. Now we set $U(\g) = T(\g)/J$ and let $\iota:\g\to U(\g)$ denote the obvious map. 
+
+\thm
+
+The pair $(U(\g), \iota)$ is a universal enveloping algebra of $\g$. 
+
+\proof
+
+Suppose that $A$ is an associative algebra and $\pi:\g\to\ms{L}(A)$ is a Lie algebra homomorphism. 
+
+Uniqueness of $\tilde{\pi}:$ follows from the fact that the images of 1 and $\iota(\g)$ generate $U(\g)$. 
+
+Existence of $\tilde{\pi}:$ Let $\pi_1:T(\g)\to A$ be given by the universal property of $T(\g)$. Show that $\pi_1$ kills $J$. 
+
+\qed
+
+
+
+
+
+
+
+
+\end{document}
+
